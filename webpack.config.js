@@ -15,8 +15,10 @@ Encore
     //.setManifestKeyPrefix('build/')
 
     .copyFiles({
-        from: './assets/img'
+        from: './assets/img',
+        to: 'img/[path][name].[ext]'
     })
+    
 
     /*
      * ENTRY CONFIG
@@ -27,17 +29,17 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('css', './assets/js/css.js')
-    .addEntry('js', './assets/js/js.js')
-    .addEntry('vendor', './assets/js/vendor.js')
+    .addEntry('app', './assets/js/app.js')
+    // .addEntry('css', './assets/js/css.js')
+    // .addEntry('vendor', './assets/js/vendor.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
-    // .enableSingleRuntimeChunk()
-    .disableSingleRuntimeChunk()
+    .enableSingleRuntimeChunk()
+    // .disableSingleRuntimeChunk()
 
     /*
      * FEATURE CONFIG

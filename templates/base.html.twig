@@ -6,11 +6,23 @@
 
         <meta content="" name="descriptison">
         <meta content="" name="keywords">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+        {# Favicons #}
+        <link href="{{ asset('build/img/favicon.png') }}" rel="icon">
+        <link href="{{ asset('build/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+        {# Fonts #}
+        <link href='https://fonts.googleapis.com/css?family=Asul' rel='stylesheet'>
+
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>
