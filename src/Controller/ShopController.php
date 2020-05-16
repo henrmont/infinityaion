@@ -5,15 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PainelController extends AbstractController
+class ShopController extends AbstractController
 {
     /**
-     * @Route("/painel", name="painel")
+     * @Route("/shop", name="shop")
      */
     public function index()
     {
-        return $this->render('painel/painel.html.twig', [
-            'controller_name' => 'PainelController',
+        return $this->render('painel/contents/shop.html.twig', [
+            'controller_name' => 'ShopController',
         ]);
     }
 }

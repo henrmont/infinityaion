@@ -1,0 +1,140 @@
+/* Side Menu */
+#sidenav {
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #2A2A2A;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+#sidenav #perfil{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+    border: 10px solid #2A2A2A;
+}
+
+#sidenav #perfil img{
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sidenav #desc {
+    position: relative;
+    margin-top: -50px;
+    padding-top: 50px;
+    width: 200px;
+    height: 150px;
+    background-color: rgb(180,180,180);
+    z-index: 2;
+ }
+
+ #sidenav #desc ul {
+     padding-top: 20px;
+    list-style: none;
+ }
+
+#sidenav #desc li {
+    font-size: 14px;
+    padding-top:0px;
+ }
+
+ #sidenav #desc li.elyos {
+    font-size: 14px;
+    padding-top:0px;
+    color: green;
+ }
+
+#sidenav #menu ul{
+    margin-left: -30px;
+    list-style: none;
+}
+
+#sidenav #menu ul li {
+    padding: 1vh;
+}
+
+#sidenav #menu ul li a{
+    color: rgb(130,130,130);
+    font-size: 17px;
+    transition: linear .3s;
+}
+
+#sidenav #menu ul li a.shop{
+    color: rgb(200,150,10);
+    font-size: 17px;
+    transition: linear .3s;
+}
+
+#sidenav #menu ul li a.admin{
+    color: rgb(230,70,50);
+    font-size: 17px;
+    transition: linear .3s;
+}
+
+#sidenav #menu ul li a i{
+    margin-right: 10px;
+}
+
+#sidenav #menu ul li a:hover{
+    color: white;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgb(200,200,250);
+    transition: linear .3s;
+}
+
+#sidenav #desc li {
+    font-size: 14px;
+    padding-top:0px;
+ }
+  
+  /* Page content */
+#main {
+    margin-left: 200px;
+}
+
+#main #content {
+    grid-column: 1;
+    margin-right: 220px;
+    margin-left: 20px;
+}
+
+#main #content .final {
+    border-bottom: 3px solid tomato;
+    padding-bottom: 10px;
+}
+
+#main #offer{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #2A2A2A;
+    justify-content: center;
+    display: flex;
+}
+
+#main #offer img{
+    margin-top: 30px;
+    width: 150px;
+    height: 150px;
+}
+
+#content #title{
+    display: flex;
+    justify-content: center;
+    border-bottom: 3px solid tomato;
+}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PainelController!{% endblock %}
+
+{% block body %}
+<nav id="sidenav">
+  <div id="perfil">
+    <img src="{{ asset('build/img/perfil.jpg') }}">
+  </div>
+  <div id="desc">
+    <ul>
+      <li class="elyos"><strong>Monteiro</strong></li>
+      <li>Gladiador</li>
+      <li>Asmodian Army 5</li>
+    </ul>  
+  </div>
+  <div id="menu">
+    <ul>
+      <li><a href="{{ path('feed')}}"><i class="fa fa-rss"></i>Feed de Notícias</a></li>
+      <li><a href="#"><i class="fa fa-users"></i>Personagens</a></li>
+      <li><a href="#"><i class="fa fa-envelope"></i>Mensagens</a></li>
+      <li><a href="#"><i class="fa fa-book"></i>Ranking</a></li>
+      <li><a href="shop" class="shop"><i class="fa fa-tags"></i>Shop</a></li>
+      <li><a href="#"><i class="fa fa-money"></i>Histórico</a></li>
+      <li><a href="#"><i class="fa fa-headphones"></i>Suport</a></li>
+      <li><a href="#"><i class="fa fa-cog"></i>Configurações</a></li>
+      {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="admin" class="admin"><i class="fa fa-cog"></i>Admin</a></li>
+      {% endif %}
+      <li><a href="logout"><i class="fa fa-sign-out"></i>Sair</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Use any element to open the sidenav -->
+{# <span onclick="openNav()">open</span> #}
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+  <div id="content">
+  {% block content %}{% endblock %}
+  </div>
+  <div id="offer">
+    <div><img src="{{ asset('build/img/perfil.jpg')}}"><div>
+    <div><img src="{{ asset('build/img/perfil.jpg')}}"><div>
+    <div><img src="{{ asset('build/img/perfil.jpg')}}"><div>
+  </div>
+</div>    
+{% endblock %}
