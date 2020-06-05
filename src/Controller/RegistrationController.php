@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setCoin(0);
+            $user->setCoin(20000);
             $user->setTagFeed(0);
             $user->setTagCoin(0);
             $user->setTagShop(0);
