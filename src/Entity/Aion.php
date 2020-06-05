@@ -27,6 +27,16 @@ class Aion
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $membership;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $expire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Aion
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getMembership(): ?int
+    {
+        return $this->membership;
+    }
+
+    public function setMembership(int $membership): self
+    {
+        $this->membership = $membership;
+
+        return $this;
+    }
+
+    public function getExpire(): ?\DateTimeInterface
+    {
+        return $this->expire;
+    }
+
+    public function setExpire(?\DateTimeInterface $expire): self
+    {
+        $this->expire = $expire;
 
         return $this;
     }

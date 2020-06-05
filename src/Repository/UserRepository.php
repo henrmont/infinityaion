@@ -64,4 +64,145 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
+    public function searchChar($user)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM al_server_gs.players
+            WHERE al_server_gs.players.account_name = :user
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['user' => $user]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
+    public function insertVip($user, $vip)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $getdata = '
+            SELECT al_server_ls.account_data.expire FROM al_server_ls.account_data
+            WHERE al_server_ls.account_data.name = :user
+            ';
+
+        $expire = $conn->prepare($getdata);
+        $expire->execute(['user' => $user]);
+        $result = $expire->fetchAll();
+
+        // echo $result[0]['expire'];
+        // die();
+
+        if($result[0]['expire']!= ''){
+            $sql = '
+                UPDATE al_server_ls.account_data
+                SET 
+                    al_server_ls.account_data.membership = 2,
+                    al_server_ls.account_data.expire = DATE_ADD(al_server_ls.account_data.expire, INTERVAL :vip DAY)
+                WHERE al_server_ls.account_data.name = :user
+                ';    
+        }else{
+            $sql = '
+                UPDATE al_server_ls.account_data
+                SET 
+                    al_server_ls.account_data.membership = 2,
+                    al_server_ls.account_data.expire = CURRENT_DATE + INTERVAL :vip DAY
+                WHERE al_server_ls.account_data.name = :user
+                ';
+        }
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'user'  => $user,
+            'vip'   => $vip
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        // return $stmt->fetchAll();
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
+    public function searchRace($user)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT al_server_gs.players.race FROM al_server_gs.players
+            WHERE al_server_gs.players.account_name = :user
+            GROUP BY al_server_gs.players.race
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['user' => $user]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
+    public function definePassword($user, $pass)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            UPDATE al_server_ls.account_data
+            SET 
+                al_server_ls.account_data.password = :pass 
+            WHERE al_server_ls.account_data.name = :user
+            ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'pass'  => $pass,
+            'user'  => $user
+        ]);
+    }
+
+    /**
+     * @return User[] Returns an array of Item objects
+     */
+    public function getTags($user)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                user.tagFeed AS tag_feed,
+                user.tagCoin AS tag_coin,
+                user.tagShop AS tag_shop,
+                user.tagTicket AS tag_ticket
+            ')
+            ->where('user.id = :user')
+            ->setParameter('user',$user)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder()
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em
+            ->getRepository(User::class)
+            ->createQueryBuilder('user')
+        ;
+
+        return $queryBuilder;
+    }
 }

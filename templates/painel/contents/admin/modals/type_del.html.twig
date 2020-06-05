@@ -1,5 +1,5 @@
 {# The Modal #}
-<div class="modal fade" id="delCat">
+<div class="modal fade" id="deleteType">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -11,16 +11,13 @@
 
       {# Modal body #}
       <div class="modal-body">
-        <form name="formdelcat" action="{{ path('delete_type') }}">
-        <div class="form-group">
-          <label for="delselect">Selecione uma Categoria:</label>
-          <select class="form-control" id="delselect" name="delcat">
-            {% for item in item_sel %}
-              <option value="{{ item.id }}">{{ item.name }}</option>
-            {% endfor %}
-          </select>
+        <form name="form-del-type" action="{{ path('delete_type') }}">
+        <div class="row">
+          <div class="col-lg-12 text-left">
+            <input name="id" type="hidden" value="">
+            Tem certeza que deseja excluir a categoria <span name="aion" style="color: red;"></span> ?.
+          </div>
         </div>
-
       </div>
 
       {# Modal footer #}

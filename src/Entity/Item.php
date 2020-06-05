@@ -17,9 +17,9 @@ class Item
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true, nullable=true)
      */
-    private $aion_id;
+    private $aion;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -27,7 +27,7 @@ class Item
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $type;
 
@@ -37,12 +37,12 @@ class Item
     private $level;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
     private $price;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $discount;
 
@@ -57,14 +57,29 @@ class Item
     private $modified_at;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bbcode;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : 0})
      */
     private $promo;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $amount;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $race;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
     public function getId(): ?int
     {
@@ -73,12 +88,12 @@ class Item
 
     public function getAionId(): ?int
     {
-        return $this->aion_id;
+        return $this->aion;
     }
 
-    public function setAionId(int $aion_id): self
+    public function setAionId(int $aion): self
     {
-        $this->aion_id = $aion_id;
+        $this->aion = $aion;
 
         return $this;
     }
@@ -187,6 +202,42 @@ class Item
     public function setPromo(bool $promo): self
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getRace(): ?string
+    {
+        return $this->race;
+    }
+
+    public function setRace(string $race): self
+    {
+        $this->race = $race;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

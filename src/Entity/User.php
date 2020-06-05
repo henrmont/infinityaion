@@ -35,6 +35,61 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $modified_at;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $coin;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $race;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tagFeed;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tagShop;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tagCoin;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tagTicket;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,5 +161,137 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modified_at;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modified_at): self
+    {
+        $this->modified_at = $modified_at;
+
+        return $this;
+    }
+
+    public function getCoin(): ?int
+    {
+        return $this->coin;
+    }
+
+    public function setCoin(?int $coin): self
+    {
+        $this->coin = $coin;
+
+        return $this;
+    }
+
+    public function getEmail(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getImage(): string
+    {
+        return (string) $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getName(): string
+    {
+        return (string) $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getRace(): string
+    {
+        return (string) $this->race;
+    }
+
+    public function setRace(string $race): self
+    {
+        $this->race = $race;
+
+        return $this;
+    }
+
+    public function getTagFeed(): ?bool
+    {
+        return $this->tagFeed;
+    }
+
+    public function setTagFeed(bool $tagFeed): self
+    {
+        $this->tagFeed = $tagFeed;
+
+        return $this;
+    }
+
+    public function getTagShop(): ?bool
+    {
+        return $this->tagShop;
+    }
+
+    public function setTagShop(bool $tagShop): self
+    {
+        $this->tagShop = $tagShop;
+
+        return $this;
+    }
+
+    public function getTagCoin(): ?bool
+    {
+        return $this->tagCoin;
+    }
+
+    public function setTagCoin(bool $tagCoin): self
+    {
+        $this->tagCoin = $tagCoin;
+
+        return $this;
+    }
+
+    public function getTagTicket(): ?bool
+    {
+        return $this->tagTicket;
+    }
+
+    public function setTagTicket(bool $tagTicket): self
+    {
+        $this->tagTicket = $tagTicket;
+
+        return $this;
     }
 }

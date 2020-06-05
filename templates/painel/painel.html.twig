@@ -4,30 +4,41 @@
 
 {% block body %}
 <nav id="sidenav">
+  <div class="logo text-center"><img src="{{ asset('build/img/infinityaion.png')}}" style="width: 80%"></div>
   <div id="perfil">
-    <img src="{{ asset('build/img/perfil.jpg') }}">
+    {% if status_image != ''  %}
+      <img src="{{ asset('uploads/profile/' ~ status_image)}}">
+    {% else %}
+      <img src="{{ asset('build/img/perfil.jpg') }}">
+    {% endif %}
   </div>
   <div id="desc">
     <ul>
-      <li class="elyos"><strong>Monteiro</strong></li>
-      <li>Gladiador</li>
-      <li>Asmodian Army 5</li>
+      {% if status_race == 'ASMODIANS' %}
+        <li><strong style="color: rgb(10,150,250);">{{status_name}}</strong></li>
+      {% elseif status_race == 'ELYOS' %}
+        <li><strong style="color: green;">{{status_name}}</strong></li>
+      {% else %}
+        <li><strong>{{status_name}}</strong></li>
+      {% endif %}
+      <li>{{status_coins}}</li>
     </ul>  
   </div>
   <div id="menu">
     <ul>
-      <li><a href="{{ path('feed')}}"><i class="fa fa-rss"></i>Feed de Notícias</a></li>
-      <li><a href="#"><i class="fa fa-users"></i>Personagens</a></li>
-      <li><a href="#"><i class="fa fa-envelope"></i>Mensagens</a></li>
+      <li><a href="{{ path('feed') }}"><i class="fa fa-rss"></i>Feed de Notícias</a></li>
+      {# <li><a href="#"><i class="fa fa-users"></i>Personagens</a></li> #}
+      <li><a href="{{ path('message') }}"><i class="fa fa-envelope"></i>Mensagens</a></li>
       <li><a href="#"><i class="fa fa-book"></i>Ranking</a></li>
-      <li><a href="shop" class="shop"><i class="fa fa-tags"></i>Shop</a></li>
-      <li><a href="#"><i class="fa fa-money"></i>Histórico</a></li>
-      <li><a href="#"><i class="fa fa-headphones"></i>Suport</a></li>
-      <li><a href="#"><i class="fa fa-cog"></i>Configurações</a></li>
+      <li><a href="{{ path('shop') }}" class="shop"><i class="fa fa-tags"></i>Infinity Shop</a></li>
+      <li><a href="{{ path('coin') }}" class="shop"><i class="fa fa-credit-card"></i>Infinity Coin</a></li>
+      <li><a href="{{ path('history') }}"><i class="fa fa-history"></i>Histórico</a></li>
+      <li><a href="{{ path('suport') }}"><i class="fa fa-headphones"></i>Suport</a></li>
+      <li><a href="{{ path('config') }}"><i class="fa fa-cog"></i>Configurações</a></li>
       {% if is_granted('ROLE_ADMIN') %}
-        <li><a href="admin" class="admin"><i class="fa fa-cog"></i>Admin</a></li>
+        <li><a href="{{ path('admin') }}" class="admin"><i class="fa fa-cog"></i>Admin</a></li>
       {% endif %}
-      <li><a href="logout"><i class="fa fa-sign-out"></i>Sair</a></li>
+      <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out"></i>Sair</a></li>
     </ul>
   </div>
 </nav>

@@ -36,13 +36,13 @@
     margin-top: -50px;
     padding-top: 50px;
     width: 200px;
-    height: 150px;
+    height: 130px;
     background-color: rgb(180,180,180);
     z-index: 2;
  }
 
  #sidenav #desc ul {
-     padding-top: 20px;
+     padding-top: 10px;
     list-style: none;
  }
 
@@ -59,11 +59,13 @@
 
 #sidenav #menu ul{
     margin-left: -30px;
+    margin-top: 5px;
     list-style: none;
+    font-family: 'Carrois Gothic SC', sans-serif;
 }
 
 #sidenav #menu ul li {
-    padding: 1vh;
+    padding: 0.7vh;
 }
 
 #sidenav #menu ul li a{
@@ -78,9 +80,23 @@
     transition: linear .3s;
 }
 
+#sidenav #menu ul li a.shop:hover{
+    color: rgb(200,200,50);
+    text-decoration: none;
+    text-shadow: 0 0 10px rgb(230,230,50);
+    transition: linear .3s;
+}
+
 #sidenav #menu ul li a.admin{
     color: rgb(230,70,50);
     font-size: 17px;
+    transition: linear .3s;
+}
+
+#sidenav #menu ul li a.admin:hover{
+    color: rgb(230,130,50);
+    text-decoration: none;
+    text-shadow: 0 0 10px rgb(240,150,50);
     transition: linear .3s;
 }
 
@@ -137,4 +153,36 @@
     display: flex;
     justify-content: center;
     border-bottom: 3px solid tomato;
+}
+
+/* shop */
+#shopbar {
+    height: 70px;
+    background-color: yellow;
+}
+
+.item-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4;
+}
+
+.item-content img{
+    width: 150px;
+}
+
+/* coin */
+.coin{
+    margin-top: 100px;
+    width: 200px;
+    opacity: 0.7;
+    box-shadow: 5px 5px 10px 5px rgb(20,20,20);
+    transition: linear .2s;
+    border-radius: 30px;
+}
+
+.coin:hover{
+    opacity: 1;
+    box-shadow: 5px 5px 10px 5px rgb(20,20,20);
+    transition: linear .2s;
 }

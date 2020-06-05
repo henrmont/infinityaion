@@ -1,5 +1,5 @@
 {# The Modal #}
-<div class="modal fade" id="editCat">
+<div class="modal fade" id="editType">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -11,16 +11,9 @@
 
       {# Modal body #}
       <div class="modal-body">
-        <form name="formeditcat" action="{{ path('update_type') }}">
+        <form name="form-edit-type" action="{{ path('edit_type') }}">
         <div class="form-group">
-          <label for="editselect">Selecione uma Categoria:</label>
-          <select class="form-control" id="editselect" name="editcat">
-            {% for item in item_sel %}
-              <option value="{{ item.id }}">{{ item.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
+          <input name="id" type="hidden" value="">
           <label for="name">Novo Nome:</label>
           <input type="text" class="form-control" id="name" name="editname">
         </div>
@@ -28,7 +21,7 @@
 
       {# Modal footer #}
       <div class="modal-footer">
-        <input type="submit" class="btn btn-info" value="Alterar">
+        <input type="submit" class="btn btn-info" value="Editar">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
       </form>

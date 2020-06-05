@@ -2,22 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\ItemType;
+use App\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ItemTypeType extends AbstractType
+class TicketType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            // ->add('created_at', DateType::class)
-            // ->add('modified_at', DateType::class)
+            // ->add('user', TextType::class)
+            ->add('type', TextType::class)
+            // ->add('status')
+            ->add('message', TextType::class)
+            ->add('title', TextType::class)
+            // ->add('created_at')
+            // ->add('modified_at')
             ->add('submit', SubmitType::class)
         ;
     }
@@ -25,7 +28,7 @@ class ItemTypeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ItemType::class,
+            'data_class' => Ticket::class,
         ]);
     }
 }

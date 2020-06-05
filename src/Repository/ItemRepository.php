@@ -19,22 +19,47 @@ class ItemRepository extends ServiceEntityRepository
         parent::__construct($registry, Item::class);
     }
 
-    // /**
-    //  * @return Item[] Returns an array of Item objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Item[] Returns an array of Item objects
+     */
+    public function searchItem($filter, $category = null, $race = null)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                item.id AS id,
+                item.aion AS aion,
+                item.name AS name,
+                item.price AS price,
+                item.discount AS discount,
+                item.promo AS promo,
+                item.image AS image,
+                item.race AS race,
+                item.amount AS amount
+            ')
+            ->where('item.name LIKE :filter')
+            ->setParameter('filter','%'.$filter.'%')
+            ->orderBy('item.name','ASC')
         ;
+
+        if($race != null){
+            $qb
+                ->andWhere('item.race = :any OR item.race = :race')
+                ->setParameter('any','ANY')
+                ->setParameter('race', $race)
+            ;
+        }
+
+        if($category != ""){
+            $qb
+                ->andWhere('item.type = :category')
+                ->setParameter('category',$category)
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Item
@@ -47,4 +72,19 @@ class ItemRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder()
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em
+            ->getRepository(Item::class)
+            ->createQueryBuilder('item')
+        ;
+
+        return $queryBuilder;
+    }
 }

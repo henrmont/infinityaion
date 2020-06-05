@@ -33,6 +33,14 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setCoin(0);
+            $user->setTagFeed(0);
+            $user->setTagCoin(0);
+            $user->setTagShop(0);
+            $user->setTagTicket(0);
+            $user->setCreatedAt(new \DateTime('now'));
+            $user->setModifiedAt(new \DateTime('now'));
+
 
             $data = $request->request->get('registration_form');
             // echo "<pre>";
@@ -41,6 +49,7 @@ class RegistrationController extends AbstractController
             // die();
 
             $aion->setName($data['username']);
+            $aion->setMembership(0);
             $aion->setPassword(base64_encode(sha1($data['plainPassword'], true)));
 
             $entityManagerUser = $this->getDoctrine()->getManager();

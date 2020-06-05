@@ -24,4 +24,11 @@
     }
   };
 
+  // var form = $('[name=formfeed]');
+
+  // form.ajaxSubmit({
+  //   url: Routing.generate('feed_inc', { id : $(this).val() }),
+  //   type: 'post'
+  // });
+
 })(jQuery);

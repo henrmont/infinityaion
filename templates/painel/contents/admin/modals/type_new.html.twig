@@ -1,6 +1,6 @@
 {# The Modal #}
-<div class="modal fade" id="incCat">
-  {{form_start(item_new)}}
+<div class="modal fade" id="incType">
+  {{form_start(cat_new)}}
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -12,18 +12,18 @@
 
       {# Modal body #}
       <div class="modal-body text-left">
-        {{ form_row(item_new.name) }}
+        {{ form_row(cat_new.name) }}
           {# {{ form_row(item_new.name) }} #}
         {# {{ form_end(item_new) }} #}
       </div>
 
       {# Modal footer #}
       <div class="modal-footer">
-        {{ form_row(item_new.submit) }}
+        {{ form_row(cat_new.submit) }}
         <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
 
     </div>
   </div>
-  {{form_end(item_new)}}
+  {{form_end(cat_new)}}
 </div>

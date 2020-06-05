@@ -8,10 +8,13 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/style.css';
 import '../css/painel.css';
+import '../css/buttons.css';
+import '../css/forms.css';
 
 
 // JS
 import '../js/main.js';
+import '../js/painel.js';
 
 //Vendors
 import '../vendor/font-awesome/css/font-awesome.min.css';

@@ -1,0 +1,84 @@
+{% extends 'painel/painel.html.twig' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row" id="title" style="margin-bottom:20px;">
+        <h1>Infinity Shop</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 text-right">
+            <form name="form-shop" action="{{ path('shop') }}">
+            <label for="search" style="margin-top:5px;">Buscar:</label>
+        </div>
+        <div class="col-lg-4 text-left">
+            <input type="text" class="form-control" name="search" style="margin-left:20px;">
+        </div>
+        <div class="col-lg-2 text-right">
+            <label for="search" style="margin-top:5px;">Categoria:</label>
+        </div>
+        <div class="col-lg-4 text-left">
+            <select class="form-control" id="sel1" name="category">
+                <option value="">Todos</option>
+                {% for cat in category %}
+                    <option value="{{cat.id}}">{{cat.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-1 text-left">
+            <input type="submit" class="btn btn-info" value="Filtrar">
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    {% set divisor = 1 %}
+    <div class="row" style="margin-top: 30px;">
+        {% for item in data %}
+            <div class="col-lg-3 item-content text-center">
+                <div style="grid-column: 1/3;"><img src="{{ asset('uploads/item/' ~ item.image)}}" style="width:100px"></div>
+                <div style="grid-column: 1/3; height: 45px;"><small>{{ item.name }}</small></div>
+                {% if item.promo %}
+                    <div style="grid-column: 1; text-decoration: line-through;">{{ item.price }}</div>
+                    <div style="grid-column: 2;">{{ item.price - (item.price * (item.discount /100 )) }}</div>
+                {% else %}
+                    <div style="grid-column: 1/3;">{{ item.price }}</div>
+                {% endif %}
+                {% set vip = item.aion|slice(0,3) %}
+                {% if vip == 519 %}
+                    <div class="text-center" style="grid-column: 1/3;">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#vipMember" data-id="{{ item.aion }}" data-set="{{ item.name }}">
+                            Comprar
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="text-center" style="grid-column: 1/3;">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#showitem" data-id="{{ item.aion }}" data-set="{{ item.amount }}">
+                            Comprar
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+            {% if divisor == 4 %}
+                </div>
+                <div class="row" style="margin-top: 30px;">
+            {% endif %}
+            {% set divisor = divisor + 1 %}
+        {% endfor %}
+        {% include "painel/contents/shop/modals/show_item.html.twig" %}
+        {% include "painel/contents/shop/modals/vip.html.twig" %}
+    </div>
+    <ul>
+        
+    </ul>
+</div>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 text-center">
+        <div class="navigation">
+            {{ knp_pagination_render(data) }}
+        </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+
+{% endblock %}

@@ -17,6 +17,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "datatables.net-bs4": "^1.10.21",
+        "jquery-validation": "^1.19.2",
         "wowjs": "^1.1.3"
     }
 }

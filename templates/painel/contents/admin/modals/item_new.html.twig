@@ -1,6 +1,7 @@
 {# The Modal #}
 <div class="modal fade" id="incItem">
-  <div class="modal-dialog">
+  {{form_start(item_new)}}
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       {# Modal Header #}
@@ -11,14 +12,60 @@
 
       {# Modal body #}
       <div class="modal-body">
-        Modal body..
+        <div class="row">
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.aion_id) }}
+          </div>
+          <div class="col-lg-4 text-left">
+            <div class="form-group">
+              <label for="selectcat">Selecione uma Categoria:</label>
+              <select class="form-control" id="selectcat" name="selcat">
+                {% for item in cat_sel %}
+                  <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.level) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 text-left">
+            {{ form_row(item_new.name) }}
+          </div>
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.race) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.price) }}
+          </div>
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.amount) }}
+          </div>
+          <div class="col-lg-4 text-left">
+            {{ form_row(item_new.discount) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 text-left">
+            {{ form_row(item_new.bbcode) }}
+          </div>
+          <div class="col-lg-6 text-left">
+            {{ form_row(item_new.image) }}
+          </div>
+        </div>
       </div>
 
       {# Modal footer #}
       <div class="modal-footer">
+        {{ form_row(item_new.submit) }}
         <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
 
     </div>
   </div>
+  {{form_end(item_new)}}
 </div>
