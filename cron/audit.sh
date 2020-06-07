@@ -1,5 +1,6 @@
 #!/bin/bash
 while ((1)) ; do
-    php /var/www/html/infinityaion/cron/audit.sh
-    sleep 30m
+    php /var/www/html/infinityaion/cron/player.php
+    php /var/www/html/infinityaion/cron/membership.php
+    sleep 2m
 done
