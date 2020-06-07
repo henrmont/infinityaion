@@ -7,10 +7,10 @@ class Players
     private $user_id;
     private $user_name;
     private $dblocal = "localhost";
-    private $dbuser = "aionsys";
-    private $dbpass = "1nf1A10nS3rVr";
-    // private $dbuser = "devsms";
-    // private $dbpass = "s3cr3t05";
+    // private $dbuser = "aionsys";
+    // private $dbpass = "1nf1A10nS3rVr";
+    private $dbuser = "devsms";
+    private $dbpass = "s3cr3t05";
     private $dbname = "al_server_gs";
     private $dbinfinity = "infinityaion";
 
@@ -61,20 +61,14 @@ class Players
         $mysqli = new mysqli($this->dblocal,$this->dbuser,$this->dbpass,$this->dbinfinity);
 
         $query = "
-            SELECT player.id, player.name, player.user_id, player.user_name 
-            FROM player
-            WHERE player.name = '".$name."' 
+            SELECT Player.player_id, Player.player_name, Player.user_id, Player.user_name 
+            FROM Player
+            WHERE Player.player_name = '".$name."' 
         ";
 
-        while($result = $mysqli->query($query)){
-            $res = $result->num_rows;
-        }
+        $result = $mysqli->query($query);
 
-        if(!isset($res)){
-            $res = 0;
-        }
-
-        if($res == 0){
+        if(($result->num_rows)==0){
             $this->insertPlayer();
         }
 
