@@ -7,10 +7,10 @@ class Players
     private $user_id;
     private $user_name;
     private $dblocal = "localhost";
-    // private $dbuser = "aionsys";
-    // private $dbpass = "1nf1A10nS3rVr";
-    private $dbuser = "devsms";
-    private $dbpass = "s3cr3t05";
+    private $dbuser = "aionsys";
+    private $dbpass = "1nf1A10nS3rVr";
+    // private $dbuser = "devsms";
+    // private $dbpass = "s3cr3t05";
     private $dbname = "al_server_gs";
     private $dbinfinity = "infinityaion";
 
