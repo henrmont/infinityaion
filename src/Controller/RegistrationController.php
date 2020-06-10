@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setCoin(20000);
+            $user->setCoin(0);
             $user->setTagFeed(0);
             $user->setTagCoin(0);
             $user->setTagShop(0);
@@ -54,11 +54,11 @@ class RegistrationController extends AbstractController
 
             $entityManagerUser = $this->getDoctrine()->getManager();
             $entityManagerUser->persist($user);
-            $entityManagerUser->flush();
+            // $entityManagerUser->flush();
 
             $entityManagerAion = $this->getDoctrine()->getManager('aion');
             $entityManagerAion->persist($aion);
-            $entityManagerAion->flush();
+            // $entityManagerAion->flush();
 
             // do anything else you need here, like send an email
 
