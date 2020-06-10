@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
 use App\Entity\Message;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,12 +35,19 @@ class MessageController extends AbstractController
                 $request->query->getInt('limit',7)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/message/message.html.twig', [
                 'data'      =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

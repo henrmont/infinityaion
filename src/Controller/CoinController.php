@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\HistoryCoin;
+use App\Entity\Item;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,11 +17,20 @@ class CoinController extends AbstractController
     {
         $user = $this->getUser();
 
+        $em = $this->getDoctrine()->getManager();
+
+        $promo = $em->getRepository(Item::class)->findBy([
+            'promo'     =>  true
+        ]);
+        $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
         return $this->render('painel/contents/coin/coin.html.twig',[
             'status_race'      =>  $user->getRace(),
             'status_name'      =>  $user->getName(),
             'status_image'      =>  $user->getImage(),
-            'status_coins'     =>  $user->getCoin()
+            'status_coins'     =>  $user->getCoin(),
+            'promo'     =>  $promo,
+            'players'   =>  $players
         ]);
     }
 

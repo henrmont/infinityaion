@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,12 +28,19 @@ class ConfigController extends AbstractController
 
         $msgs = $em->getRepository(User::class)->getTags($user->getId());
 
+        $promo = $em->getRepository(Item::class)->findBy([
+            'promo'     =>  true
+        ]);
+        $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
         return $this->render('painel/contents/config/config.html.twig', [
             'tags'                  =>  $msgs,
             'status_race'                  =>  $user->getRace(),
             'status_name'           =>  $user->getName(),
             'status_image'      =>  $user->getImage(),
-            'status_coins'          =>  $user->getCoin()
+            'status_coins'          =>  $user->getCoin(),
+            'promo'     =>  $promo,
+            'players'   =>  $players
         ]);
     }
 

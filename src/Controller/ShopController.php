@@ -38,6 +38,10 @@ class ShopController extends AbstractController
                 $request->query->getInt('limit',8)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+
             return $this->render('painel/contents/shop/shop.html.twig', [
                 'data'      =>  $result,
                 'players'   =>  $players,
@@ -45,7 +49,8 @@ class ShopController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

@@ -122,6 +122,11 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('admin');
             }
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/admin.html.twig', [
                 'users'     =>  $select_user,
                 'cat_new'   =>  $itemtype_form->createView(),
@@ -131,7 +136,9 @@ class AdminController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
 
         }catch(\Exception $e){
@@ -159,13 +166,20 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/itens/itens.html.twig', [
                 'itens'             =>  $result,
                 'category'          =>  $cat,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'      =>  $user->getCoin()
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -264,12 +278,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/itens/types.html.twig', [
                 'category'             =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'      =>  $user->getCoin()
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -336,12 +357,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/suport/suport.html.twig', [
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -362,6 +390,11 @@ class AdminController extends AbstractController
             $ticketMessage = $em->getRepository(TicketMessage::class)->findBy([
                 'ticket'    =>  $ticket->getId()
             ]);
+
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
             
             return $this->render('painel/contents/admin/suport/ticket.html.twig', [
                 'ticket'    =>  $ticket,
@@ -369,7 +402,9 @@ class AdminController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -444,12 +479,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',7)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/coin/coin.html.twig', [
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -502,12 +544,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',8)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/coin/history.html.twig', [
                 'coin'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'      =>  $user->getCoin()
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -533,12 +582,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',8)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/feed/posts.html.twig', [
                 'report'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'      =>  $user->getCoin()
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -564,12 +620,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',8)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/feed/comments.html.twig', [
                 'report'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'      =>  $user->getCoin()
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -695,12 +758,19 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/player/player.html.twig', [
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -778,13 +848,20 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/cms/carousel.html.twig', [
                 'data'          =>  $result,
                 'form'   =>  $carousel_form->createView(),
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -934,13 +1011,20 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/cms/notice.html.twig', [
                 'data'          =>  $result,
                 'form'   =>  $notice_form->createView(),
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -1089,13 +1173,20 @@ class AdminController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/admin/cms/resource.html.twig', [
                 'data'          =>  $result,
                 'form'   =>  $resource_form->createView(),
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

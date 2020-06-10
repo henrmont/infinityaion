@@ -95,6 +95,7 @@ class FeedController extends AbstractController
             $promo = $em->getRepository(Item::class)->findBy([
                 'promo'     =>  true
             ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
 
             return $this->render('painel/contents/feed/feed.html.twig', [
                 'post'      =>  $feed_form->createView(),
@@ -106,7 +107,8 @@ class FeedController extends AbstractController
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
-                'promo'     =>  $promo
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -127,6 +129,11 @@ class FeedController extends AbstractController
             $comments = $em->getRepository(FeedComment::class)->searchComment($id);
             $report = $em->getRepository(Report::class)->findAll();
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/feed/feed_full.html.twig', [
                 'feeds'     =>  $feeds,
                 'comments'  =>  $comments,
@@ -135,7 +142,9 @@ class FeedController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

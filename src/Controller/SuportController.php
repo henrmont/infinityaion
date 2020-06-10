@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
 use App\Form\TicketType;
 use App\Entity\Ticket;
 use App\Entity\TicketMessage;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,13 +50,20 @@ class SuportController extends AbstractController
                 $request->query->getInt('limit',6)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
             return $this->render('painel/contents/suport/suport.html.twig', [
                 'ticket_new'    =>  $ticket_form->createView(),
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
 
         }catch(\Exception $e){
@@ -76,6 +85,11 @@ class SuportController extends AbstractController
             $ticketMessage = $em->getRepository(TicketMessage::class)->findBy([
                 'ticket'    =>  $ticket->getId(),
             ]);
+
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
             
             return $this->render('painel/contents/suport/ticket.html.twig', [
                 'ticket'    =>  $ticket,
@@ -83,7 +97,9 @@ class SuportController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

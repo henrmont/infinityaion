@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\History;
 use App\Entity\HistoryCoin;
+use App\Entity\Item;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,10 +31,10 @@ class HistoryController extends AbstractController
             ]
             );
 
-            // echo "<pre>";
-            // print_r($history_coin);
-            // echo "</pre>";
-            // die();
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
 
             return $this->render('painel/contents/history/history.html.twig', [
                 'history_item'      =>  $history,
@@ -40,7 +42,9 @@ class HistoryController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
