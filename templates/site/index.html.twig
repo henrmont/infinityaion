@@ -53,14 +53,17 @@
                 <div style="padding-top:200px; padding-left:200px;">
                   <h1 style="color: white">{{item.title}}</h1>
                   <h4 style="color: white;">{{item.text}}</h4>
+                </div>
               </div>
             </div>
             {% set active = false %}
           {% else %}
             <div class="carousel-item carousel-div" id="carousel-{{item.id}}" style="background-image: url({{ asset('uploads/cms/' ~ item.imageFull)}})">
               <div class="content">
-                <h1 style="color: white">{{item.title}}</h1>
-                <h4 style="color: white;">{{item.text}}</h4>
+                <div style="padding-top:200px; padding-left:200px;">
+                  <h1 style="color: white">{{item.title}}</h1>
+                  <h4 style="color: white;">{{item.text}}</h4>
+                </div>
               </div>
             </div>
           {% endif %}
