@@ -56,6 +56,10 @@
         $('[name="aion"]').text($(this).data('name'));
     })
 
+    $('[data-target="#promoItem"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
     $('[data-target="#editType"]').click(function(){
         $('[name="id"]').val($(this).data('id'));
     })

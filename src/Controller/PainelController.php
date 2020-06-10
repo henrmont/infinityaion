@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PainelController extends AbstractController
@@ -12,8 +13,6 @@ class PainelController extends AbstractController
      */
     public function index()
     {
-        return $this->render('painel/painel.html.twig', [
-            'controller_name' => 'PainelController',
-        ]);
+        return new Response('painel');
     }
 }

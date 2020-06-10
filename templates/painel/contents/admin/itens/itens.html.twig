@@ -36,9 +36,10 @@
                     <thead>
                         <tr>
                             <th width="30%" class="text-center">Aion ID</th>
-                            <th width="50%" class="text-center">Título</th>
-                            <th width="10%"></th>
-                            <th width="10%"></th>
+                            <th width="46%" class="text-center">Título</th>
+                            <th width="8%" class="text-center"></th>
+                            <th width="8%" class="text-center"></th>
+                            <th width="8%" class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +53,17 @@
                                     </button>
                                 </td>
                                 <td class="text-center">
+                                    {% if item.promo %}
+                                        <button type="button" class="rbtn-report" data-toggle="modal" data-target="#promoItem" data-id="{{item.id}}">
+                                            <i class="fa fa-star"></i>
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="rbtn-check" data-toggle="modal" data-target="#promoItem" data-id="{{item.id}}">
+                                            <i class="fa fa-star"></i>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
                                     <button type="button" class="rbtn-cancel" data-toggle="modal" data-target="#deleteItem" data-id="{{item.id}}" data-name="{{item.name}}">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -60,6 +72,7 @@
                         {% endfor %}
                         {% include "painel/contents/admin/modals/item_edit.html.twig" %}
                         {% include "painel/contents/admin/modals/item_del.html.twig" %}
+                        {% include "painel/contents/admin/modals/item_promo.html.twig" %}
                     </tbody>
                 </table>
             </div>

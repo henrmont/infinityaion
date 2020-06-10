@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\FeedType;
 use App\Entity\Feed;
 use App\Entity\FeedComment;
+use App\Entity\Item;
 use App\Entity\Report;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,6 +92,10 @@ class FeedController extends AbstractController
                 $request->query->getInt('limit',10)
             );
 
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+
             return $this->render('painel/contents/feed/feed.html.twig', [
                 'post'      =>  $feed_form->createView(),
                 'feeds'     =>  $result,
@@ -100,7 +105,8 @@ class FeedController extends AbstractController
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
-                'status_coins'     =>  $user->getCoin()
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo
             ]);
         }catch(\Exception $e){
             return $e->getMessage();

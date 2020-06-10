@@ -222,6 +222,30 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/promo/item", name="promo_item")
+     */
+    public function promoItem(Request $request)
+    {
+        try{
+            $em = $this->getDoctrine()->getManager();
+
+            $item = $em->getRepository(Item::class)->find($request->get('id'));
+
+            if($item->getPromo() == true){
+                $item->setPromo(false);
+            }else{
+                $item->setPromo(true);
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_itens');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
      * @Route("/types", name="admin_types")
      */
     public function adminTypes(ContainerInterface $container, Request $request)
