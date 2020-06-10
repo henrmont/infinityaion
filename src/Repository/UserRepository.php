@@ -192,6 +192,37 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * @return User[] Returns an array of Item objects
+     */
+    public function getPlayers($filter = null)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                user.id as id,
+                user.username as username,
+                user.name as name,
+                user.race as race,
+                user.email as email,
+                user.isActive as isActive,
+                user.isReport as isReport,
+                user.isSuspect as isSuspect
+            ')
+        ;
+
+        if($filter != null){
+            $qb
+                ->where('user.name LIKE :filter')
+                // ->orWhere('user.username LIKE :filter')
+                ->setParameter('filter','%'.$filter.'%')
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getQueryBuilder()

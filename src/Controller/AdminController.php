@@ -4,10 +4,20 @@ namespace App\Controller;
 
 use App\Entity\HistoryCoin;
 use App\Entity\Item;
+use App\Entity\Feed;
+use App\Entity\FeedComment;
 use App\Entity\ItemType;
+use App\Entity\Message;
+use App\Entity\Report;
 use App\Entity\Ticket;
 use App\Entity\TicketMessage;
 use App\Entity\User;
+use App\Entity\CmsCarousel;
+use App\Entity\CmsNotice;
+use App\Entity\CmsResource;
+use App\Form\CmsCarouselType;
+use App\Form\CmsNoticeType;
+use App\Form\CmsResourceType;
 use App\Form\FormItem;
 use App\Form\FormItemType;
 use App\Form\TicketType;
@@ -448,4 +458,695 @@ class AdminController extends AbstractController
         } 
         
     }
+
+    /**
+     * @Route("/history", name="admin_history")
+     */
+    public function adminHistory(ContainerInterface $container, Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $history = $em->getRepository(HistoryCoin::class)->historyCoins($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $history,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',8)
+            );
+
+            return $this->render('painel/contents/admin/coin/history.html.twig', [
+                'coin'              =>  $result,
+                'status_race'       =>  $user->getRace(),
+                'status_name'       =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'      =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/posts", name="admin_posts")
+     */
+    public function adminPosts(ContainerInterface $container, Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $report = $em->getRepository(Report::class)->searchReportPost();
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $report,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',8)
+            );
+
+            return $this->render('painel/contents/admin/feed/posts.html.twig', [
+                'report'              =>  $result,
+                'status_race'       =>  $user->getRace(),
+                'status_name'       =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'      =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/comments", name="admin_comments")
+     */
+    public function adminComments(ContainerInterface $container, Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $report = $em->getRepository(Report::class)->searchReportComment();
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $report,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',8)
+            );
+
+            return $this->render('painel/contents/admin/feed/comments.html.twig', [
+                'report'              =>  $result,
+                'status_race'       =>  $user->getRace(),
+                'status_name'       =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'      =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/notify/posts", name="admin_notify_post")
+     */
+    public function adminNotifyPosts(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $feed = $em->getRepository(Feed::class)->find($request->get('pid'));
+            $target = $em->getRepository(User::class)->find($request->get('id'));
+
+            $feed->setIsActive(false);
+
+            $msg = new Message();
+
+            if($target->getIsReport() == true){
+                $target->setIsActive(false);
+
+                //message
+                $msg->setUser($request->get('id'));
+                $msg->setSubject('Usuário Bloqueado');
+                $msg->setText('Sua conta está sendo bloqueada por apresentar uma reincidência de conduta inadequada ao utilizar o feed de notícias. Entre em contato com a administração.');
+                $msg->setUnread(false);
+                $msg->setCreatedAt(new \DateTime('now'));
+                $msg->setModifiedAt(new \DateTime('now'));
+                $em->persist($msg);
+
+            }else{
+                $target->setIsReport(true);
+
+                //message
+                $msg->setUser($request->get('id'));
+                $msg->setSubject('Usuário Notificado');
+                $msg->setText('Sua conta está sendo notificada por apresentar uma conduta inadequada ao utilizar o feed de notícias. Caso haja reincidência tomaremos medidas que devem impactar no uso da plataforma como um todo.');
+                $msg->setUnread(false);
+                $msg->setCreatedAt(new \DateTime('now'));
+                $msg->setModifiedAt(new \DateTime('now'));
+                $em->persist($msg);
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/notify/comments", name="admin_notify_comment")
+     */
+    public function adminNotifyComents(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $comment = $em->getRepository(FeedComment::class)->find($request->get('pid'));
+            $target = $em->getRepository(User::class)->find($request->get('id'));
+
+            $comment->setIsActive(false);
+
+            $msg = new Message();
+
+            if($target->getIsReport() == true){
+                $target->setIsActive(false);
+
+                //message
+                $msg->setUser($request->get('id'));
+                $msg->setSubject('Usuário Bloqueado');
+                $msg->setText('Sua conta está sendo bloqueada por apresentar uma reincidência de conduta inadequada ao utilizar o feed de notícias. Entre em contato com a administração.');
+                $msg->setUnread(false);
+                $msg->setCreatedAt(new \DateTime('now'));
+                $msg->setModifiedAt(new \DateTime('now'));
+                $em->persist($msg);
+
+            }else{
+                $target->setIsReport(true);
+
+                //message
+                $msg->setUser($request->get('id'));
+                $msg->setSubject('Usuário Notificado');
+                $msg->setText('Sua conta está sendo notificada por apresentar uma conduta inadequada ao utilizar o feed de notícias. Caso haja reincidência tomaremos medidas que devem impactar no uso da plataforma como um todo.');
+                $msg->setUnread(false);
+                $msg->setCreatedAt(new \DateTime('now'));
+                $msg->setModifiedAt(new \DateTime('now'));
+                $em->persist($msg);
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/player", name="admin_player")
+     */
+    public function adminPlayer(ContainerInterface $container, Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $player = $em->getRepository(User::class)->getPlayers($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $player,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',6)
+            );
+
+            return $this->render('painel/contents/admin/player/player.html.twig', [
+                'data'          =>  $result,
+                'status_race'      =>  $user->getRace(),
+                'status_name'      =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'     =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/carousel", name="admin_cms_carousel")
+     */
+    public function cmsCarousel(ContainerInterface $container, Request $request, SluggerInterface $slugger)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $carousel = new CmsCarousel();
+            $carousel_form = $this->createForm(CmsCarouselType::class, $carousel);
+            $carousel_form->handleRequest($request);
+            if ($carousel_form->isSubmitted()) {
+                $carousel->setCreatedAt(new \DateTime('now'));
+                $carousel->setModifiedAt(new \DateTime('now'));
+                $carousel->setIsActive(true);
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile = $carousel_form->get('image_full')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $carousel->setImageFull($newFilename);
+                }
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile2 = $carousel_form->get('image_small')->getData();
+                if ($imageFile2) {
+                    $originalFilename2 = pathinfo($imageFile2->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename2 = $slugger->slug($originalFilename2);
+                    $newFilename2 = $safeFilename2.'-'.uniqid().'.'.$imageFile2->guessExtension();
+
+                    try {
+                        $imageFile2->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename2
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $carousel->setImageSmall($newFilename2);
+                }
+
+                $carousel = $carousel_form->getData();
+
+                $em->persist($carousel);
+                $em->flush();
+
+                return $this->redirectToRoute('admin_cms_carousel');
+            }
+
+            $carousel_list = $em->getRepository(CmsCarousel::class)->searchCarousel($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $carousel_list,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',6)
+            );
+
+            return $this->render('painel/contents/admin/cms/carousel.html.twig', [
+                'data'          =>  $result,
+                'form'   =>  $carousel_form->createView(),
+                'status_race'      =>  $user->getRace(),
+                'status_name'      =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'     =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        } 
+        
+    }
+
+    /**
+     * @Route("/cms/carousel/edit", name="admin_cms_carousel_edit")
+     */
+    public function adminCarouselEdit(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $carousel = $em->getRepository(CmsCarousel::class)->find($request->get('id'));
+
+            $carousel->setTitle($request->get('edittitle'));
+            $carousel->setText($request->get('edittext'));
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_carousel');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/carousel/active", name="admin_cms_carousel_active")
+     */
+    public function adminCarouselActive(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $carousel = $em->getRepository(CmsCarousel::class)->find($request->get('id'));
+
+            if($carousel->getIsActive() == true){
+                $carousel->setIsActive(false);    
+            }else{
+                $carousel->setIsActive(true);    
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_carousel');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/carousel/delete", name="admin_cms_carousel_del")
+     */
+    public function adminCarouselDelete(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $carousel = $em->getRepository(CmsCarousel::class)->find($request->get('id'));
+
+            $em->remove($carousel);
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_carousel');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/notice", name="admin_cms_notice")
+     */
+    public function cmsNotice(ContainerInterface $container, Request $request, SluggerInterface $slugger)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $notice = new CmsNotice();
+            $notice_form = $this->createForm(CmsNoticeType::class, $notice);
+            $notice_form->handleRequest($request);
+            if ($notice_form->isSubmitted()) {
+                $notice->setCreatedAt(new \DateTime('now'));
+                $notice->setModifiedAt(new \DateTime('now'));
+                $notice->setIsActive(true);
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile = $notice_form->get('image')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $notice->setImage($newFilename);
+                }
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile = $notice_form->get('image_small')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $notice->setImageSmall($newFilename);
+                }
+
+                $notice = $notice_form->getData();
+
+                $em->persist($notice);
+                $em->flush();
+
+                return $this->redirectToRoute('admin_cms_notice');
+            }
+
+            $notice_list = $em->getRepository(CmsNotice::class)->searchNotice($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $notice_list,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',6)
+            );
+
+            return $this->render('painel/contents/admin/cms/notice.html.twig', [
+                'data'          =>  $result,
+                'form'   =>  $notice_form->createView(),
+                'status_race'      =>  $user->getRace(),
+                'status_name'      =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'     =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        } 
+        
+    }
+
+    /**
+     * @Route("/cms/notice/edit", name="admin_cms_notice_edit")
+     */
+    public function adminNoticeEdit(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $notice = $em->getRepository(CmsNotice::class)->find($request->get('id'));
+
+            $notice->setTitle($request->get('edittitle'));
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_notice');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/notice/active", name="admin_cms_notice_active")
+     */
+    public function adminNoticeActive(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $notice = $em->getRepository(CmsNotice::class)->find($request->get('id'));
+
+            if($notice->getIsActive() == true){
+                $notice->setIsActive(false);    
+            }else{
+                $notice->setIsActive(true);    
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_notice');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/notice/delete", name="admin_cms_notice_del")
+     */
+    public function adminNoticeDelete(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $notice = $em->getRepository(CmsNotice::class)->find($request->get('id'));
+
+            $em->remove($notice);
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_notice');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/resource", name="admin_cms_resource")
+     */
+    public function cmsResource(ContainerInterface $container, Request $request, SluggerInterface $slugger)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $resource = new CmsResource();
+            $resource_form = $this->createForm(CmsResourceType::class, $resource);
+            $resource_form->handleRequest($request);
+            if ($resource_form->isSubmitted()) {
+                $resource->setCreatedAt(new \DateTime('now'));
+                $resource->setModifiedAt(new \DateTime('now'));
+                $resource->setIsActive(true);
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile = $resource_form->get('image')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $resource->setImage($newFilename);
+                }
+
+                /** @var UploadedFile $brochureFile */
+                $imageFile = $resource_form->get('image_small')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('cms_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+                    $resource->setImageSmall($newFilename);
+                }
+
+                $resource = $resource_form->getData();
+
+                $em->persist($resource);
+                $em->flush();
+
+                return $this->redirectToRoute('admin_cms_resource');
+            }
+
+            $resource_list = $em->getRepository(CmsResource::class)->searchResource($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $resource_list,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',6)
+            );
+
+            return $this->render('painel/contents/admin/cms/resource.html.twig', [
+                'data'          =>  $result,
+                'form'   =>  $resource_form->createView(),
+                'status_race'      =>  $user->getRace(),
+                'status_name'      =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'     =>  $user->getCoin()
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        } 
+        
+    }
+
+    /**
+     * @Route("/cms/resource/edit", name="admin_cms_resource_edit")
+     */
+    public function adminResourceEdit(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $resource = $em->getRepository(CmsResource::class)->find($request->get('id'));
+
+            $resource->setTitle($request->get('edittitle'));
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_resource');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/resource/active", name="admin_cms_resource_active")
+     */
+    public function adminResourceActive(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $resource = $em->getRepository(CmsResource::class)->find($request->get('id'));
+
+            if($resource->getIsActive() == true){
+                $resource->setIsActive(false);    
+            }else{
+                $resource->setIsActive(true);    
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_resource');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/cms/resource/delete", name="admin_cms_resource_del")
+     */
+    public function adminResourceDelete(Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $resource = $em->getRepository(CmsResource::class)->find($request->get('id'));
+
+            $em->remove($resource);
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_cms_resource');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
 }

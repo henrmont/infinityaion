@@ -90,6 +90,21 @@ class User implements UserInterface
      */
     private $tagTicket;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isReport;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isSuspect;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -291,6 +306,42 @@ class User implements UserInterface
     public function setTagTicket(bool $tagTicket): self
     {
         $this->tagTicket = $tagTicket;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getIsReport(): ?bool
+    {
+        return $this->isReport;
+    }
+
+    public function setIsReport(bool $isReport): self
+    {
+        $this->isReport = $isReport;
+
+        return $this;
+    }
+
+    public function getIsSuspect(): ?bool
+    {
+        return $this->isSuspect;
+    }
+
+    public function setIsSuspect(bool $isSuspect): self
+    {
+        $this->isSuspect = $isSuspect;
 
         return $this;
     }

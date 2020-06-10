@@ -50,6 +50,28 @@ class HistoryCoinRepository extends ServiceEntityRepository
     */
 
     /**
+     * @return History[] Returns an array of Item objects
+     */
+    public function historyCoins()
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                coin.id as id,
+                coin.amount as amount,
+                coin.price as price,
+                u.username as name,
+                coin.created_at AS mes
+            ')
+            ->innerJoin(User::class,'u','WITH','coin.user = u.id')
+            ->orderBy('coin.created_at','DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @return Ticket[] Returns an array of Item objects
      */
     public function searchCoins($filter)

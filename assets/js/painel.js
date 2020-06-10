@@ -65,6 +65,52 @@
         $('[name="aion"]').text($(this).data('name'));
     })
 
+    $('[data-target="#notifyReport"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+        $('[name="pid"]').val($(this).data('pid'));
+        $('[name="formnotify"]').attr('action',$(this).data('url'));
+    })
+
+    $('[data-target="#unLock"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#carouselEdit"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#carouselActive"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#carouselDelete"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#noticeEdit"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#noticeActive"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#noticeDelete"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#resourceEdit"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#resourceActive"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#resourceDelete"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
     $('#senha-submit').click(function(e){
         e.preventDefault();
         var pwd = $('#pwd').val();
