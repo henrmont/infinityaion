@@ -50,8 +50,9 @@
           {% if active == true %}
             <div class="carousel-item active carousel-div" id="carousel-{{item.id}}" style="background-image: url({{ asset('uploads/cms/' ~ item.imageFull)}})">
               <div class="content">
-                <div style="padding-top:200px; padding-left:200px;"><h1 style="color: white">{{item.title}}</h1></div>
-                <div style="padding-left:200px;"><h4 style="color: white;">{{item.text}}</h4></div>
+                <div style="padding-top:200px; padding-left:200px;">
+                  <h1 style="color: white">{{item.title}}</h1>
+                  <h4 style="color: white;">{{item.text}}</h4>
               </div>
             </div>
             {% set active = false %}
