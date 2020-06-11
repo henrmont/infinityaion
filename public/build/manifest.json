@@ -22,6 +22,9 @@
   "build/img/coin.png": "/build/img/coin.png",
   "build/img/d1.jpg": "/build/img/d1.jpg",
   "build/img/d2.jpg": "/build/img/d2.jpg",
+  "build/img/dl-client.png": "/build/img/dl-client.png",
+  "build/img/dl-patch.png": "/build/img/dl-patch.png",
+  "build/img/dl2-client.png": "/build/img/dl2-client.png",
   "build/img/favicon.png": "/build/img/favicon.png",
   "build/img/infinityaion (2).png": "/build/img/infinityaion (2).png",
   "build/img/infinityaion.png": "/build/img/infinityaion.png",
@@ -38,8 +41,5 @@
   "build/img/team-1.jpg": "/build/img/team-1.jpg",
   "build/img/team-2.jpg": "/build/img/team-2.jpg",
   "build/img/team-3.jpg": "/build/img/team-3.jpg",
-  "build/img/team-4.jpg": "/build/img/team-4.jpg",
-  "build/img/dl-client.png": "/build/img/dl-client.png",
-  "build/img/dl-patch.png": "/build/img/dl-patch.png",
-  "build/img/dl2-client.png": "/build/img/dl2-client.png"
+  "build/img/team-4.jpg": "/build/img/team-4.jpg"
 }
