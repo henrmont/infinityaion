@@ -23,6 +23,8 @@ class ShopController extends AbstractController
     public function index(ContainerInterface $container, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -53,7 +55,11 @@ class ShopController extends AbstractController
                 'promo'     =>  $promo,
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
         
     }
@@ -184,6 +190,8 @@ class ShopController extends AbstractController
         $con = $this->getDoctrine()->getConnection();
         $con->beginTransaction();
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $em_aion_gs = $this->getDoctrine()->getManager('aiongs');
@@ -298,7 +306,11 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('shop');
         }catch(\Exception $e){
             $con->rollBack();
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 

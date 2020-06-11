@@ -26,6 +26,8 @@ class FeedController extends AbstractController
     public function index(ContainerInterface $container, Request $request, SluggerInterface $slugger)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -112,7 +114,11 @@ class FeedController extends AbstractController
                 'players'   =>  $players
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -122,6 +128,8 @@ class FeedController extends AbstractController
     public function fullFeedIndex($id)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -148,7 +156,11 @@ class FeedController extends AbstractController
                 'players'   =>  $players
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -158,6 +170,8 @@ class FeedController extends AbstractController
     public function feedInc($id, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -200,7 +214,12 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
+            // return $e->getMessage();
         }
     }
 
@@ -210,6 +229,8 @@ class FeedController extends AbstractController
     public function feedEdit(Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -229,7 +250,11 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -239,6 +264,8 @@ class FeedController extends AbstractController
     public function feedDisable($id)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -251,7 +278,11 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -261,6 +292,8 @@ class FeedController extends AbstractController
     public function feedReport($id, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -285,7 +318,11 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed'); 
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -295,6 +332,8 @@ class FeedController extends AbstractController
     public function commentDisable($id)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -307,7 +346,11 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -317,6 +360,8 @@ class FeedController extends AbstractController
     public function commentFullDisable($id,$feed)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -331,7 +376,11 @@ class FeedController extends AbstractController
                 'id'    =>  $feed
             ]); 
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -365,7 +414,11 @@ class FeedController extends AbstractController
 
             return $this->redirectToRoute('feed'); 
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 

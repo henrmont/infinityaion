@@ -22,26 +22,37 @@ class ConfigController extends AbstractController
      */
     public function index(Request $request)
     {
-        $user = $this->getUser();
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
 
-        $msgs = $em->getRepository(User::class)->getTags($user->getId());
+            $em = $this->getDoctrine()->getManager();
 
-        $promo = $em->getRepository(Item::class)->findBy([
-            'promo'     =>  true
-        ]);
-        $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $msgs = $em->getRepository(User::class)->getTags($user->getId());
 
-        return $this->render('painel/contents/config/config.html.twig', [
-            'tags'                  =>  $msgs,
-            'status_race'                  =>  $user->getRace(),
-            'status_name'           =>  $user->getName(),
-            'status_image'      =>  $user->getImage(),
-            'status_coins'          =>  $user->getCoin(),
-            'promo'     =>  $promo,
-            'players'   =>  $players
-        ]);
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
+            return $this->render('painel/contents/config/config.html.twig', [
+                'tags'                  =>  $msgs,
+                'status_race'                  =>  $user->getRace(),
+                'status_name'           =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'          =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
+            ]);
+        }catch(\Exception $e){
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
+        }
+        
     }
 
     /**
@@ -50,6 +61,8 @@ class ConfigController extends AbstractController
     public function userInfo(Request $request, string $uploadDir, FileUploader $uploader)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -72,7 +85,11 @@ class ConfigController extends AbstractController
             
             return $this->redirectToRoute('config');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
         
     }
@@ -83,6 +100,8 @@ class ConfigController extends AbstractController
     public function msnConfig(Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -117,7 +136,11 @@ class ConfigController extends AbstractController
 
             return $this->redirectToRoute('config');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
         
     }
@@ -128,6 +151,8 @@ class ConfigController extends AbstractController
     public function redefinirSenha(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -147,7 +172,11 @@ class ConfigController extends AbstractController
 
             return $this->redirectToRoute('logout');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
         
     }

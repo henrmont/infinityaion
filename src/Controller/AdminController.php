@@ -20,17 +20,17 @@ use App\Form\CmsNoticeType;
 use App\Form\CmsResourceType;
 use App\Form\FormItem;
 use App\Form\FormItemType;
-use App\Form\TicketType;
-use App\Repository\HistoryCoinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN", message="Page not found.")
  */
 class AdminController extends AbstractController
 {

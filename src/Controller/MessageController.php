@@ -18,6 +18,8 @@ class MessageController extends AbstractController
     public function index(ContainerInterface $container, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -50,7 +52,11 @@ class MessageController extends AbstractController
                 'players'   =>  $players
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 
@@ -60,6 +66,8 @@ class MessageController extends AbstractController
     public function messageViewIndex($id)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $em = $this->getDoctrine()->getManager();
 
             $message = $em->getRepository(Message::class)->find($id);
@@ -68,7 +76,11 @@ class MessageController extends AbstractController
                 'data'    =>  $message
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
         
     }
@@ -79,6 +91,8 @@ class MessageController extends AbstractController
     public function messageDelIndex($id)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $em = $this->getDoctrine()->getManager();
 
             $message = $em->getRepository(Message::class)->find($id);
@@ -89,7 +103,11 @@ class MessageController extends AbstractController
 
             return $this->redirectToRoute('message');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 }

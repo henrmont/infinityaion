@@ -20,6 +20,8 @@ class SuportController extends AbstractController
     public function index(ContainerInterface $container, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -77,6 +79,8 @@ class SuportController extends AbstractController
     public function ticketIndex($id, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -111,6 +115,8 @@ class SuportController extends AbstractController
     public function ticketSendIndex($id, Request $request)
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();

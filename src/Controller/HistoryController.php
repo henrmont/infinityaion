@@ -17,6 +17,8 @@ class HistoryController extends AbstractController
     public function index()
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -47,7 +49,11 @@ class HistoryController extends AbstractController
                 'players'   =>  $players
             ]);
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         }
     }
 }

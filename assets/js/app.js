@@ -25,3 +25,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+$(function(){
+
+});

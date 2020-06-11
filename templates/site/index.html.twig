@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block body %}
-
   {# ++++++++++ Header ++++++++++ #}
   <header id="header">
     <nav id="navbar">
@@ -26,6 +25,14 @@
     </nav>
   </header>
   {# End Header #}
+
+  {# ++++++++++ Flash Bags +++++++++++ #}
+  {% for message in app.flashes('notice') %}
+    <div class="alert alert-warning alert-dismissible" style="position: absolute; top: 130px; left:30px; z-index:1000;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Alerta! </strong>{{ message }}
+    </div>
+  {% endfor %}
 
   {# ++++++++++ Carousel +++++++++++ #}
   <section id="carousel">
@@ -212,12 +219,15 @@
       <div class="row">
         <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
           <a href="#" style="margin-top:50px;"><img src="{{ asset('build/img/dl-client.png') }}"></a>
+          <div style="margin-top: 30px;"><h4>Download do Patch</h4></div>
         </div>
         <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
           <a href="#" style="margin-top:50px;"><img src="{{ asset('build/img/dl-patch.png') }}"></a>
+          <div style="margin-top: 30px;"><h4>Download do Patch</h4></div>
         </div>
         <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
           <a href="#" style="margin-top:50px;"><img src="{{ asset('build/img/dl2-client.png') }}"></a>
+          <div style="margin-top: 30px;"><h4>Download do Patch</h4></div>
         </div>
       </div>
     </div>

@@ -15,23 +15,34 @@ class CoinController extends AbstractController
      */
     public function index()
     {
-        $user = $this->getUser();
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
 
-        $promo = $em->getRepository(Item::class)->findBy([
-            'promo'     =>  true
-        ]);
-        $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $em = $this->getDoctrine()->getManager();
 
-        return $this->render('painel/contents/coin/coin.html.twig',[
-            'status_race'      =>  $user->getRace(),
-            'status_name'      =>  $user->getName(),
-            'status_image'      =>  $user->getImage(),
-            'status_coins'     =>  $user->getCoin(),
-            'promo'     =>  $promo,
-            'players'   =>  $players
-        ]);
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
+            return $this->render('painel/contents/coin/coin.html.twig',[
+                'status_race'      =>  $user->getRace(),
+                'status_name'      =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'     =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
+            ]);
+        }catch(\Exception $e){
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
+        } 
+        
     }
 
     /**
@@ -40,6 +51,8 @@ class CoinController extends AbstractController
     public function coin30index()
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -58,7 +71,11 @@ class CoinController extends AbstractController
             
             return $this->redirect('https://pag.ae/7W375ZFTH');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
     }
 
@@ -68,6 +85,8 @@ class CoinController extends AbstractController
     public function coin50index()
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -86,7 +105,11 @@ class CoinController extends AbstractController
             
             return $this->redirect('https://pag.ae/7W38W-FnR');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
     }
 
@@ -96,6 +119,8 @@ class CoinController extends AbstractController
     public function coin80index()
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -114,7 +139,11 @@ class CoinController extends AbstractController
             
             return $this->redirect('https://pag.ae/7W38XaexR');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
     }
 
@@ -124,6 +153,8 @@ class CoinController extends AbstractController
     public function coin100index()
     {
         try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
             $user = $this->getUser();
 
             $em = $this->getDoctrine()->getManager();
@@ -142,7 +173,11 @@ class CoinController extends AbstractController
             
             return $this->redirect('https://pag.ae/7W38XiQpn');
         }catch(\Exception $e){
-            return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
         } 
     }
 }
