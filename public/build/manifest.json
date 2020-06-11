@@ -38,5 +38,8 @@
   "build/img/team-1.jpg": "/build/img/team-1.jpg",
   "build/img/team-2.jpg": "/build/img/team-2.jpg",
   "build/img/team-3.jpg": "/build/img/team-3.jpg",
-  "build/img/team-4.jpg": "/build/img/team-4.jpg"
+  "build/img/team-4.jpg": "/build/img/team-4.jpg",
+  "build/img/dl-client.png": "/build/img/dl-client.png",
+  "build/img/dl-patch.png": "/build/img/dl-patch.png",
+  "build/img/dl2-client.png": "/build/img/dl2-client.png"
 }

@@ -190,7 +190,7 @@ hr {
   margin-top: -50px;
   padding-top: 50px;
   width: 250px;
-  height: 200px;
+  height: 230px;
   background-color: rgb(210,210,210);
   z-index: 1;
   border: 2px solid tomato;
@@ -216,8 +216,6 @@ hr {
 
 #download img:hover{
   margin-top: 10px;
-  width: 70vh;
-  height: 70vh;
   transition: linear .2s;
   opacity: 1;
   box-shadow: 5px 5px 15px 5px rgb(20,20,20);
