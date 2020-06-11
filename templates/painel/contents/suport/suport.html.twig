@@ -10,11 +10,11 @@
             <form name="form-ticket" class="form-inline" action="{{ path('suport') }}">
                 <label for="search">Buscar:</label>
                 <input type="text" class="form-control" name="search" style="margin-left:20px;">
-                <button type="submit" class="btn btn-primary" style="margin-left:20px;">Buscar</button>
+                <button type="submit" class="btn btn-blue" style="margin-left:20px;">Buscar</button>
             </form>
         </div>
-        <div class="col-lg-3 text-right">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TicketNew">
+        <div class="col-lg-3 text-center">
+            <button type="button" class="btn btn-green" data-toggle="modal" data-target="#TicketNew">
                 Novo ticket
             </button>
             {% include "painel/contents/suport/modals/ticket_new.html.twig" %}

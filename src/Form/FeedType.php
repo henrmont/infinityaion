@@ -28,7 +28,7 @@ class FeedType extends AbstractType
             // ->add('created_at')
             // ->add('modified_at')
             ->add('image', FileType::class, [
-                'label' => 'Anexar',
+                // 'label' => 'Anexar',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

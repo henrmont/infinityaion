@@ -11,9 +11,9 @@
                 <div class="col-lg-10">
                     <div class="card" style="margin-top:10px; margin-bottom:5px; background-color:white;">
                         <div class="card-body">
-                            <h4>{{ ticket.user }}</h4>
-                            <small style="color: red;">{{ ticket.createdAt|format_date() }}</small>
-                            <p>{{ ticket.message }}</p>
+                            <h4>{{ ticket[0].name }}</h4>
+                            <small style="color: red;">{{ ticket[0].createdAt|format_date() }}</small>
+                            <p>{{ ticket[0].message }}</p>
                         </div>
                     </div>
                 </div>
@@ -22,12 +22,12 @@
             {% if messages is defined %}
                 {% for msn in messages %}
                     <div class="row">
-                        {% if msn.sender == 'Admin' %}
+                        {% if msn.name == 'Admin' %}
                             <div class="col-lg-2"></div>
                             <div class="col-lg-10 text-right">
                                 <div class="card" style="margin-top:10px; margin-bottom:5px; background-color:white;">
                                     <div class="card-body">
-                                        <h4>{{ msn.sender }}</h4>
+                                        <h4>{{ msn.name }}</h4>
                                         <small style="color: red;">{{ msn.createdAt|format_date() }}</small>
                                         <p>{{ msn.message }}</p>
                                     </div>
@@ -37,7 +37,7 @@
                             <div class="col-lg-10 text-left">
                                 <div class="card" style="margin-top:10px; margin-bottom:5px; background-color:white;">
                                     <div class="card-body">
-                                        <h4>{{ msn.sender }}</h4>
+                                        <h4>{{ msn.name }}</h4>
                                         <small style="color: red;">{{ msn.createdAt|format_date() }}</small>
                                         <p>{{ msn.message }}</p>
                                     </div>
@@ -48,8 +48,8 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            {% if ticket.status == 'Open' %}
-                <form name="form" action="send/{{ticket.id}}">
+            {% if ticket[0].status == 'Open' %}
+                <form name="form" action="send/{{ticket[0].id}}">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="form-group">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <input type="submit" class="btn btn-info" value="Enviar" style="margin-top:30px;">
+                        <input type="submit" class="btn btn-blue" value="Enviar" style="margin-top:30px;">
                     </div>
                 </div>
                 </form>

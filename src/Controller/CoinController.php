@@ -35,9 +35,9 @@ class CoinController extends AbstractController
     }
 
     /**
-     * @Route("/coin/20", name="coin_20")
+     * @Route("/coin/30", name="coin_30")
      */
-    public function coin20index()
+    public function coin30index()
     {
         try{
             $user = $this->getUser();
@@ -47,8 +47,8 @@ class CoinController extends AbstractController
             $coin = new HistoryCoin();
 
             $coin->setUser($user->getId());
-            $coin->setAmount(2000);
-            $coin->setPrice(20.00);
+            $coin->setAmount(3000);
+            $coin->setPrice(30.00);
             $coin->setStatus('Pending');
             $coin->setCreatedAt(new \DateTime('now'));
             $coin->setModifiedAt(new \DateTime('now'));

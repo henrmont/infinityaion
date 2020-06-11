@@ -81,10 +81,8 @@ class SuportController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            $ticket = $em->getRepository(Ticket::class)->find($id);
-            $ticketMessage = $em->getRepository(TicketMessage::class)->findBy([
-                'ticket'    =>  $ticket->getId(),
-            ]);
+            $ticket = $em->getRepository(Ticket::class)->selectedTicket($id);
+            $ticketMessage = $em->getRepository(TicketMessage::class)->searchTicketMessager($id);
 
             $promo = $em->getRepository(Item::class)->findBy([
                 'promo'     =>  true

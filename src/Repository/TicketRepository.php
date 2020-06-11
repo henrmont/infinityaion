@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Ticket;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -51,11 +52,43 @@ class TicketRepository extends ServiceEntityRepository
     /**
      * @return Ticket[] Returns an array of Item objects
      */
+    public function selectedTicket($ticket)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                ticket.id as id,
+                ticket.message as message,
+                ticket.created_at as createdAt,
+                ticket.status as status,
+                user.name as name
+            ')
+            ->innerJoin(User::class,'user','WITH','ticket.user = user.username')
+            ->where('ticket.id = :ticket')
+            ->setParameter('ticket',$ticket)
+            ->orderBy('ticket.id','DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Ticket[] Returns an array of Item objects
+     */
     public function searchTicket($filter, $user = null)
     {
         $qb = $this->getQueryBuilder();
 
         $qb
+            ->select('
+                ticket.id as id,
+                ticket.title as Title,
+                user.name as name,
+                ticket.status as status,
+                ticket.created_at as createdAt
+            ')
+            ->innerJoin(User::class,'user','WITH','ticket.user = user.username')
             ->where('ticket.title LIKE :filter')
             ->setParameter('filter','%'.$filter.'%')
             ->orderBy('ticket.id','DESC')

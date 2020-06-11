@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\TicketMessage;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -47,4 +48,44 @@ class TicketMessageRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return TicketMessage[] Returns an array of Item objects
+     */
+    public function searchTicketMessager($ticket)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                tm.id as id,
+                tm.ticket as ticket,
+                tm.message as message,
+                tm.created_at as createdAt,
+                user.name as name
+
+            ')
+            ->innerJoin(User::class,'user','WITH','tm.sender = user.username')
+            ->where('tm.ticket = :ticket')
+            ->setParameter('ticket',$ticket)
+            ->orderBy('tm.id','DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder()
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em
+            ->getRepository(TicketMessage::class)
+            ->createQueryBuilder('tm')
+        ;
+
+        return $queryBuilder;
+    }
 }
