@@ -68,7 +68,7 @@ class TicketMessageRepository extends ServiceEntityRepository
             ->innerJoin(User::class,'user','WITH','tm.sender = user.username')
             ->where('tm.ticket = :ticket')
             ->setParameter('ticket',$ticket)
-            ->orderBy('tm.id','DESC')
+            ->orderBy('tm.id','ASC')
         ;
 
         return $qb->getQuery()->getResult();

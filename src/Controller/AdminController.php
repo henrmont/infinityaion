@@ -427,6 +427,21 @@ class AdminController extends AbstractController
             $response->setModifiedAt(new \DateTime('now'));
 
             $em->persist($response);
+
+            $target = $em->getRepository(User::class)->getUserByTicket($id);
+
+            //message
+            if($target[0]['tagTicket'] == true){
+                $message = new Message();
+                $message->setUser($target[0]['id']);
+                $message->setSubject('Ticket Respondido');
+                $message->setText('Seu ticket foi respondido.');
+                $message->setUnread(true);
+                $message->setCreatedAt(new \DateTime('now'));
+                $message->setModifiedAt(new \DateTime('now'));
+                $em->persist($message);
+            }
+            
             $em->flush();
 
             return $this->redirectToRoute('admin_suport');
@@ -513,6 +528,18 @@ class AdminController extends AbstractController
 
             $user->setCoin($user->getCoin()+$close->getAmount());
             $user->setModifiedAt(new \DateTime('now'));
+
+            //message
+            if($user->getTagCoin() == true){
+                $message = new Message();
+                $message->setUser($user->getId());
+                $message->setSubject('Infinity Coins Aprovada');
+                $message->setText('Você adquiriu '.$close->getAmount().' Infinity Coins. A equipe do Infinity Aion agradece.');
+                $message->setUnread(true);
+                $message->setCreatedAt(new \DateTime('now'));
+                $message->setModifiedAt(new \DateTime('now'));
+                $em->persist($message);
+            }
 
             $em->flush();
 

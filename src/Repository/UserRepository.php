@@ -2,6 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Feed;
+use App\Entity\Ticket;
+use App\Entity\TicketMessage;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -168,6 +171,52 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             'pass'  => $pass,
             'user'  => $user
         ]);
+    }
+
+    /**
+     * @return User[] Returns an array of Item objects
+     */
+    public function getUserByTicket($ticket)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                user.id AS id,
+                user.tagFeed as tagFeed,
+                user.tagCoin AS tagCoin,
+                user.tagShop AS tagShop,
+                user.tagTicket AS tagTicket
+            ')
+            ->innerJoin(Ticket::class,'ticket','WITH','ticket.user = user.username')
+            ->where('ticket.id = :ticket')
+            ->setParameter('ticket',$ticket)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of Item objects
+     */
+    public function getUserByMsg($feed)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                user.id AS id,
+                user.tagFeed as tagFeed,
+                user.tagCoin AS tagCoin,
+                user.tagShop AS tagShop,
+                user.tagTicket AS tagTicket
+            ')
+            ->innerJoin(Feed::class,'feed','WITH','feed.user = user.id')
+            ->where('feed.id = :feed')
+            ->setParameter('feed',$feed)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

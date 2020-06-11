@@ -6,6 +6,7 @@ use App\Form\FeedType;
 use App\Entity\Feed;
 use App\Entity\FeedComment;
 use App\Entity\Item;
+use App\Entity\Message;
 use App\Entity\Report;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -171,6 +172,24 @@ class FeedController extends AbstractController
             $feedinc->setModifiedAt(new \DateTime('now'));
 
             $em->persist($feedinc);
+
+            $target = $em->getRepository(User::class)->getUserByMsg($id);
+
+            // print_r($target);
+            // die();
+
+            //message
+            if($target[0]['tagFeed'] == true){
+                $message = new Message();
+                $message->setUser($target[0]['id']);
+                $message->setSubject('Post Comentado');
+                $message->setText('Seu post foi comentado por '.$user->getName().'.');
+                $message->setUnread(true);
+                $message->setCreatedAt(new \DateTime('now'));
+                $message->setModifiedAt(new \DateTime('now'));
+                $em->persist($message);
+            }
+
             $em->flush();
 
             if($request->get('direct') == 'full'){

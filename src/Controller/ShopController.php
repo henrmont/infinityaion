@@ -222,13 +222,17 @@ class ShopController extends AbstractController
                     $em->persist($history);
 
                     //message
-                    $message->setUser($user->getId());
-                    $message->setSubject('VIP Adquirido');
-                    $message->setText('Você adquiriu o pacote '.$item->getName().'. A equipe do Infinity Aion agradece.');
-                    $message->setUnread(false);
-                    $message->setCreatedAt(new \DateTime('now'));
-                    $message->setModifiedAt(new \DateTime('now'));
-                    $em->persist($message);
+                    if($user->getTagShop() == true){
+                        $message = new Message();
+                        $message->setUser($user->getId());
+                        $message->setSubject('VIP Adquirido');
+                        $message->setText('Você adquiriu o pacote '.$item->getName().'. A equipe do Infinity Aion agradece.');
+                        $message->setUnread(true);
+                        $message->setCreatedAt(new \DateTime('now'));
+                        $message->setModifiedAt(new \DateTime('now'));
+                        $em->persist($message);
+                    }
+                    
                 }else{
                     //history
                     $history = new History();
@@ -269,13 +273,16 @@ class ShopController extends AbstractController
                     $em_aion_gs->persist($mail);
 
                     //message
-                    $message->setUser($user->getId());
-                    $message->setSubject('Item Adquirido');
-                    $message->setText('Você adquiriu o item '.$item->getName().'. A equipe do Infinity Aion agradece.');
-                    $message->setUnread(false);
-                    $message->setCreatedAt(new \DateTime('now'));
-                    $message->setModifiedAt(new \DateTime('now'));
-                    $em->persist($message);
+                    if($user->getTagShop() == true){
+                        $message = new Message();
+                        $message->setUser($user->getId());
+                        $message->setSubject('Item Adquirido');
+                        $message->setText('Você adquiriu o item '.$item->getName().'. A equipe do Infinity Aion agradece.');
+                        $message->setUnread(true);
+                        $message->setCreatedAt(new \DateTime('now'));
+                        $message->setModifiedAt(new \DateTime('now'));
+                        $em->persist($message);
+                    }
                 }
 
                 $user->setCoin($user->getCoin() - ($item->getPrice()*$item->getAmount()));
