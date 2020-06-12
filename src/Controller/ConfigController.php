@@ -78,9 +78,6 @@ class ConfigController extends AbstractController
                 'email'     =>  $request->get('email')
             ]);
 
-            print_r($email);
-            die();
-
             if(empty($email)){
                 if((substr($filename, -3)=='jpg')||(substr($filename, -3)=='png')||(substr($filename, -4)=='jpeg')){
                     $uploader->upload($uploadDir, $file, $filename);
