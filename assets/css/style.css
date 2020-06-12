@@ -133,6 +133,11 @@ hr {
   background-color: rgba(20,20,20,.5);
 }
 
+/* video */
+#video{
+  margin-top: 100px;
+}
+
 /* noticias */
 #noticias{
   margin-top: 50px;
@@ -147,7 +152,7 @@ hr {
   opacity: 0.5;
   margin-top: 50px;
   width: 200px;
-  height: 200px;
+  height: 300px;
   box-shadow: 2px 2px 10px 3px rgb(150, 150, 150);
 }
 
