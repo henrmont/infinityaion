@@ -83,8 +83,12 @@ class ConfigController extends AbstractController
                     $uploader->upload($uploadDir, $file, $filename);
     
                     $update = $em->getRepository(User::class)->find($user->getId());
-                    $update->setName($request->get('name'));
-                    $update->setEmail($request->get('email'));
+                    if($request->get('name') != ""){
+                        $update->setName($request->get('name'));
+                    }
+                    if($request->get('email') != ""){
+                        $update->setName($request->get('email'));
+                    }
                     $update->setImage($filename);
                     $update->setModifiedAt(new \DateTime('now'));
     

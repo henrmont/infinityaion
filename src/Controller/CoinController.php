@@ -69,7 +69,7 @@ class CoinController extends AbstractController
             $em->persist($coin);
             $em->flush();
             
-            return $this->redirect('https://pag.ae/7W375ZFTH');
+            return $this->redirect('https://pag.ae/7W6z9nWb4');
         }catch(\Exception $e){
             $this->addFlash(
                 'notice',
