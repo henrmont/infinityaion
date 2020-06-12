@@ -11,6 +11,7 @@ import '../css/painel.css';
 import '../css/buttons.css';
 import '../css/forms.css';
 import '../css/login.css';
+import '../css/register.css';
 
 
 // JS

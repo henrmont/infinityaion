@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username", "email"}, message="User/Email já existe")
  */
 class User implements UserInterface
 {
@@ -51,7 +51,7 @@ class User implements UserInterface
     private $coin;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=180)
      */
     private $email;
 

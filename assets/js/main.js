@@ -1,6 +1,17 @@
 !(function($) {
   "use strict";
 
+  $('[name="register"]').click(function(e){
+    e.preventDefault();
+    var pwd = $('#registration_form_plainPassword').val();
+    var cpwd = $('#rcpassword').val();
+    if(pwd != cpwd){
+        $('#msg').text('As senhas estão diferentes.')
+    }else{
+        $('[name="registration_form"]').submit();
+    }
+  })
+
   $('[name="recover"]').click(function(e){
     e.preventDefault();
     var pwd = $('#password').val();

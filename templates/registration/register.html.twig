@@ -3,13 +3,27 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<section id="register" style="background-image: url({{ asset('build/img/register.jpg') }}); background-size: cover;">
+    <div class="row" style="margin-left: 40vw; width: 30vw;">
+        <div class="col-lg-12 text-left">
+            <h1>Registrar-se</h1>
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.username) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                <div class="form-group">
+                    <label for="rcpassword">Confirmar Password:</label>
+                    <input type="password" class="form-control" id="rcpassword">
+                </div>
+                {{ form_row(registrationForm.agreeTerms) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                <button class="btn btn-success" name="register">Register</button>
+                <span style="color: red;" id="msg"></span>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    
+</section>
 {% endblock %}

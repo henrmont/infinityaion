@@ -114,11 +114,11 @@ class FeedController extends AbstractController
                 'players'   =>  $players
             ]);
         }catch(\Exception $e){
-            $this->addFlash(
-                'notice',
-                'Faça o login.'
-            );
-            return $this->redirectToRoute('site');
+            // $this->addFlash(
+            //     'notice',
+            //     'Faça o login.'
+            // );
+            // return $this->redirectToRoute('site');
         }
     }
 
