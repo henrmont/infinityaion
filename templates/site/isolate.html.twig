@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheet %}
+  {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="banner">
+      <img src="({{ asset('uploads/cms/' ~ data.imageSmall)}})">
+    </div>
+  </div>
+  <div class="container">
+    {% set link = data.id ~ ".html.twig" %}
+    <div class="row">
+      {% include 'site/isolates/' ~ link %}
+    </div>
+  </div>
+{% endblock %}

@@ -60,6 +60,7 @@
                 <div style="padding-top:200px; padding-left:200px;">
                   <h1 style="color: white">{{item.title}}</h1>
                   <h4 style="color: white;">{{item.text}}</h4>
+                  <div style="width: 150px;"><a href="/site/isolate/carousel/{{item.id}}/" class="btn btn-white">Saiba mais</a></div>
                 </div>
               </div>
             </div>
@@ -95,9 +96,14 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
+          <div class="noticias-box">
+            <a href="#"><img src="{{ asset('uploads/cms/notes.jpg') }}"></a>
+          </div>
+        </div>
         {% set count = 0 %}
         {% for item in notice %}
-          {% if count < 4 %}
+          {% if count < 3 %}
             <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
               <div class="noticias-box">
                 <a href="#"><img src="{{ asset('uploads/cms/' ~ item.image) }}"></a>
@@ -243,9 +249,15 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-2 col-sm-4 col-xs-12 text-center">
+          <a href="https://www.microsoft.com/pt-br/Download/confirmation.aspx?id=35"><img src="{{ asset('uploads/cms/directx.png') }}"></a>
+        </div>
+        <div class="col-lg-2 col-sm-4 col-xs-12 text-center">
+          <a href="https://www.microsoft.com/pt-br/download/confirmation.aspx?id=30653"><img src="{{ asset('uploads/cms/dotnet.png') }}"></a>
+        </div>
         {% set count = 0 %}
         {% for item in resource %}
-          {% if count < 6 %}
+          {% if count < 4 %}
             <div class="col-lg-2 col-sm-4 col-xs-12 text-center">
               <a href="#"><img src="{{ asset('uploads/cms/' ~ item.image) }}"></a>
             </div>

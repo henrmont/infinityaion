@@ -49,7 +49,7 @@ class SiteController extends AbstractController
      */
     public function recover(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        // try{
+        try{
             $em = $this->getDoctrine()->getManager();
 
             $email = $em->getRepository(User::class)->findBy([
@@ -80,12 +80,26 @@ class SiteController extends AbstractController
                 'Senha alterada com sucesso.'
             );
             return $this->redirectToRoute('site'); 
-        // }catch(\Exception $e){
-        //     $this->addFlash(
-        //         'notice',
-        //         'Faça o login.'
-        //     );
-        //     return $this->redirectToRoute('site');
-        // }
+        }catch(\Exception $e){
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
+        }
+    }
+
+    /**
+     * @Route("/site/isolate/carousel/{id}", name="isolate_carousel")
+     */
+    public function isolateCarousel($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em->getRepository(CmsCarousel::class)->find($id);
+
+        return $this->render('site/isolate.html.twig',[
+            'data'  =>  $post,
+        ]);
     }
 }

@@ -124,6 +124,7 @@ hr {
   height: 100vh;
   background-size: cover;
   background-position: center;
+  font-family: 'Asul';
 }
 
 .carousel-div div.content {
@@ -234,7 +235,7 @@ hr {
 
 #recursos a img{
   width: 150px;
-  height: 350px;
+  height: 300px;
   margin-top: 40px;
   transition: linear .2s;
   opacity: .6;
