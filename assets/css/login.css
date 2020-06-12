@@ -1,0 +1,40 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.bloco {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#login{
+    background-color: gray;
+}
+
+#recover{
+    background-color: black;
+}
+
+.scroll {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sections {
+    transition: linear .2s;
+}
+
+.scroll input.radio {
+    display: none;
+}
+
+#rd_recover:checked ~ .sections {
+    margin-top: -100vh;
+}

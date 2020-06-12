@@ -12,7 +12,7 @@
       <img src="{{ asset('build/img/perfil.jpg') }}">
     {% endif %}
   </div>
-  <div id="desc">
+  <div id="desc" style="padding-left: 40px;">
     <ul>
       {% if status_race == 'ASMODIANS' %}
         <li><strong style="color: rgb(10,150,250);">{{status_name}}</strong></li>
@@ -24,7 +24,7 @@
       <li><img src="{{ asset('build/img/infinitycoin.jpg') }}" style="width: 15px; border-radius: 100%; margin-right: 5px;">{{status_coins}} IC</li>
     </ul>  
   </div>
-  <div id="menu">
+  <div id="menu" style="padding-left: 40px;">
     <ul>
       <li><a href="{{ path('feed') }}"><i class="fa fa-rss"></i>Feed de Notícias</a></li>
       {# <li><a href="#"><i class="fa fa-users"></i>Personagens</a></li> #}

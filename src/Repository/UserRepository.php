@@ -155,6 +155,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[] Returns an array of ShopItem objects
      */
+    public function recoverPassword($email, $pass)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            UPDATE al_server_ls.account_data
+            SET 
+                al_server_ls.account_data.password = :pass 
+            WHERE al_server_ls.account_data.email = :email
+            ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'pass'      => $pass,
+            'email'     => $email
+        ]);
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
     public function definePassword($user, $pass)
     {
         $conn = $this->getEntityManager()->getConnection();

@@ -1,6 +1,17 @@
 !(function($) {
   "use strict";
 
+  $('[name="recover"]').click(function(e){
+    e.preventDefault();
+    var pwd = $('#password').val();
+    var cpwd = $('#cpassword').val();
+    if(pwd != cpwd){
+        $('#msg').text('As senhas estão diferentes.')
+    }else{
+        $('[name="form-recover"]').submit();
+    }
+  })
+
   //navbar
   $('hr').hide();
   $('.tcenter').mouseover(function(){

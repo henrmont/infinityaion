@@ -10,6 +10,7 @@ import '../css/style.css';
 import '../css/painel.css';
 import '../css/buttons.css';
 import '../css/forms.css';
+import '../css/login.css';
 
 
 // JS
@@ -25,7 +26,3 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
-$(function(){
-
-});
