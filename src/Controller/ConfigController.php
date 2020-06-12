@@ -69,21 +69,46 @@ class ConfigController extends AbstractController
 
             $file = $request->files->get('file');
 
-            $filename = $file->getClientOriginalName();
+            $filen = $file->getClientOriginalName();
+            $filex = explode(".",$filen);
 
-            if((substr($filename, -3)=='jpg')||(substr($filename, -3)=='png')){
-                $uploader->upload($uploadDir, $file, $filename);
+            $filename = $filex[0].uniqid().'.'.$filex[1];
 
-                $update = $em->getRepository(User::class)->find($user->getId());
-                $update->setName($request->get('name'));
-                $update->setEmail($request->get('email'));
-                $update->setImage($filename);
-                $update->setModifiedAt(new \DateTime('now'));
+            $email = $em->getRepository(User::class)->findBy([
+                'email'     =>  $request->get('email')
+            ]);
 
-                $em->flush();
+            print_r($email);
+            die();
+
+            if(empty($email)){
+                if((substr($filename, -3)=='jpg')||(substr($filename, -3)=='png')||(substr($filename, -4)=='jpeg')){
+                    $uploader->upload($uploadDir, $file, $filename);
+    
+                    $update = $em->getRepository(User::class)->find($user->getId());
+                    $update->setName($request->get('name'));
+                    $update->setEmail($request->get('email'));
+                    $update->setImage($filename);
+                    $update->setModifiedAt(new \DateTime('now'));
+    
+                    $em->flush();
+
+                    return $this->redirectToRoute('config');
+                }else{
+                    $this->addFlash(
+                        'notice',
+                        'Formato de arquivo inválido.'
+                    );
+                    return $this->redirectToRoute('site');
+                }    
+            }else{
+                $this->addFlash(
+                    'notice',
+                    'Email já cadastrado.'
+                );
+                return $this->redirectToRoute('site');
             }
             
-            return $this->redirectToRoute('config');
         }catch(\Exception $e){
             $this->addFlash(
                 'notice',
