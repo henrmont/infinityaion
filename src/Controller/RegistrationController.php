@@ -6,6 +6,7 @@ use App\Entity\Aion;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginAuthenticator;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,9 @@ class RegistrationController extends AbstractController
                 // echo "</pre>";
                 // die();
 
+                $con = $this->getDoctrine()->getConnection();
+                $con->beginTransaction();
+
                 if(empty($chkmail)){
                     // encode the plain password
                     $user->setPassword(
@@ -63,8 +67,12 @@ class RegistrationController extends AbstractController
                     // echo "</pre>";
                     // die();
 
+                    $date = new DateTime('now');
+                    $date->modify('+3 day');
+
                     $aion->setName($data['username']);
-                    $aion->setMembership(0);
+                    $aion->setMembership(2);
+                    $aion->setExpire($date);
                     $aion->setPassword(base64_encode(sha1($data['plainPassword'], true)));
 
                     $entityManagerUser = $this->getDoctrine()->getManager();
@@ -77,6 +85,8 @@ class RegistrationController extends AbstractController
 
                     // do anything else you need here, like send an email
 
+                    $con->commit();
+
                     return $guardHandler->authenticateUserAndHandleSuccess(
                         $user,
                         $request,
@@ -84,6 +94,8 @@ class RegistrationController extends AbstractController
                         'main' // firewall name in security.yaml
                     );
                 } else {
+                    $con->rollBack();
+                    
                     $this->addFlash(
                         'notice',
                         'Email já registrado.'

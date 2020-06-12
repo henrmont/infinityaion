@@ -33,8 +33,6 @@ class Players
     private function insertPlayer(){
         $mysqli = new mysqli($this->dblocal,$this->dbuser,$this->dbpass,$this->dbinfinity);
 
-        $date = date('Y-m-d H:i:s');
-
         $query = "
             INSERT INTO Player
             VALUES ('',$this->player_id,'$this->player_name',$this->user_id,'$this->user_name',localtime(),localtime())
@@ -51,6 +49,9 @@ class Players
         $result = $mysqli->query($query);
 
         $res = $result->fetch_all();
+
+        print_r($res);
+        die();
 
         $mysqli->close();
 
