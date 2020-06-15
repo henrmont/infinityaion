@@ -115,6 +115,19 @@
         $('[name="id"]').val($(this).data('id'));
     })
 
+    $('[data-target="#reenviarItem"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
+    $('[data-target="#confirmCoin"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+        $('[name="user"]').val($(this).data('user'));
+    })
+
+    $('[data-target="#removeCoin"]').click(function(){
+        $('[name="id"]').val($(this).data('id'));
+    })
+
     $('#senha-submit').click(function(e){
         e.preventDefault();
         var pwd = $('#pwd').val();

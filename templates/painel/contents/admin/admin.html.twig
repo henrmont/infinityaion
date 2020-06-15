@@ -19,8 +19,11 @@
                     </button>
                     {% include "painel/contents/admin/modals/item_new.html.twig" %}
                 </div>
-                <div class="col-lg-8 text-center">
+                <div class="col-lg-4 text-center">
                     <a href="{{ path('admin_itens') }}" class="btn btn-info" role="button">Administrar Itens</a>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <a href="{{ path('admin_reply') }}" class="btn btn-info" role="button">Reenviar item.</a>
                 </div>
             </div>
             <div class="row">
@@ -30,8 +33,10 @@
                     </button>
                     {% include "painel/contents/admin/modals/type_new.html.twig" %}
                 </div>
-                <div class="col-lg-8 text-center">
+                <div class="col-lg-4 text-center">
                     <a href="{{ path('admin_types') }}" class="btn btn-info" role="button">Administrar Categorias</a>
+                </div>
+                <div class="col-lg-4 text-center">
                 </div>
             </div>
         </div>

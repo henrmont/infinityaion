@@ -26,11 +26,12 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="15%" class="text-center">User</th>
+                                <th width="12%" class="text-center">User</th>
                                 <th width="30%" class="text-center">Email</th>
                                 <th width="20%" class="text-center">Quantidade</th>
                                 <th width="20%" class="text-center">Valor</th>
-                                <th width="15%" class="text-left">Aprove</th>
+                                <th width="5%" class="text-center"></th>
+                                <th width="5%" class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,11 +41,19 @@
                                     <td class="text-center">{{ item.mail }}</td>
                                     <td class="text-center">{{ item.amount }}</td>
                                     <td class="text-center">R$ {{ item.price }}</td>
-                                    {% if item.status == 'Pending' %}
-                                        <td class="text-center"><a href="coin/aprove/{{item.id}}/{{item.user}}" class="rbtn-check" role="button"><i class="fa fa-check"></i></a></td>
-                                    {% else %}
-                                        <td class="text-left">Aprovado</td>
-                                    {% endif %}
+                                    <td class="text-center">
+                                        <button type="button" class="rbtn-check" data-toggle="modal" data-target="#confirmCoin" data-id="{{ item.id }}" data-user="{{ item.user_id }}">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        {% include "painel/contents/admin/modals/coin_confirm.html.twig" %}
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="rbtn-cancel" data-toggle="modal" data-target="#removeCoin" data-id="{{ item.id }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        {# <a href="coin/aprove/{{item.id}}/{{item.user}}" class="rbtn-check" role="button"><i class="fa fa-check"></i></a> #}
+                                        {% include "painel/contents/admin/modals/coin_remove.html.twig" %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
