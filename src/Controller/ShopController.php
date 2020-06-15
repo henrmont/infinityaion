@@ -37,7 +37,7 @@ class ShopController extends AbstractController
             $result = $pagenator->paginate(
                 $data,
                 $request->query->getInt('page',1),
-                $request->query->getInt('limit',8)
+                $request->query->getInt('limit',24)
             );
 
             $promo = $em->getRepository(Item::class)->findBy([
