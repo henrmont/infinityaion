@@ -15,6 +15,8 @@ use App\Entity\User;
 use App\Entity\CmsCarousel;
 use App\Entity\CmsNotice;
 use App\Entity\CmsResource;
+use App\Entity\History;
+use App\Entity\Inventory;
 use App\Form\CmsCarouselType;
 use App\Form\CmsNoticeType;
 use App\Form\CmsResourceType;
@@ -27,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/admin")
@@ -230,6 +233,72 @@ class AdminController extends AbstractController
             $em->flush();
 
             return $this->redirectToRoute('admin_itens');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/admin/reply", name="admin_reply")
+     */
+    public function adminReply(ContainerInterface $container,Request $request)
+    {
+        try{
+            $user = $this->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $history = $em->getRepository(History::class)->searchHistoryItens($request->get('search'));
+
+            $pagenator = $container->get('knp_paginator');
+            $result = $pagenator->paginate(
+                $history,
+                $request->query->getInt('page',1),
+                $request->query->getInt('limit',6)
+            );
+
+            $promo = $em->getRepository(Item::class)->findBy([
+                'promo'     =>  true
+            ]);
+            $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+
+            return $this->render('painel/contents/admin/itens/history.html.twig', [
+                'itens'             =>  $result,
+                'status_race'       =>  $user->getRace(),
+                'status_name'       =>  $user->getName(),
+                'status_image'      =>  $user->getImage(),
+                'status_coins'      =>  $user->getCoin(),
+                'promo'     =>  $promo,
+                'players'   =>  $players
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @Route("/admin/item/reply", name="admin_item_reply")
+     */
+    public function adminItemReply(Request $request)
+    {
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $em_aion_gs = $this->getDoctrine()->getManager('aiongs');
+
+            $item = $em->getRepository(History::class)->find($request->get('id'));
+
+            $unique_id = $em->getRepository(Inventory::class)->getUnique();
+            
+            $inventory = new Inventory();
+            $inventory->setId($unique_id[0]['unique_id']+1);
+            $inventory->setItemId($item->getItem());
+            $inventory->setItemCount($item->getAmount());
+            $inventory->setItemSkin($item->getItem());
+            $inventory->setItemOwner($item->getPlayer());
+            $em_aion_gs->persist($inventory);
+            $em_aion_gs->flush();
+
+            return $this->redirectToRoute('admin_reply');
         }catch(\Exception $e){
             return $e->getMessage();
         }
@@ -489,7 +558,7 @@ class AdminController extends AbstractController
             $result = $pagenator->paginate(
                 $ticket_view,
                 $request->query->getInt('page',1),
-                $request->query->getInt('limit',7)
+                $request->query->getInt('limit',6)
             );
 
             $promo = $em->getRepository(Item::class)->findBy([
@@ -512,19 +581,19 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/coin/aprove/{id}/{user}", name="admin_coin_aprove")
+     * @Route("/coin/aprove", name="admin_coin_aprove")
      */
-    public function coinAproveIndex($id, $user)
+    public function coinAproveIndex(Request $request)
     {
         try{
             $em = $this->getDoctrine()->getManager();
 
-            $close = $em->getRepository(HistoryCoin::class)->find($id);
+            $close = $em->getRepository(HistoryCoin::class)->find($request->get('id'));
 
             $close->setStatus('Aprove');
             $close->setModifiedAt(new \DateTime('now'));
 
-            $user = $em->getRepository(User::class)->find($user);
+            $user = $em->getRepository(User::class)->find($request->get('user'));
 
             $user->setCoin($user->getCoin()+$close->getAmount());
             $user->setModifiedAt(new \DateTime('now'));
@@ -548,6 +617,26 @@ class AdminController extends AbstractController
             return $e->getMessage();
         } 
         
+    }
+
+    /**
+     * @Route("/coin/remove", name="admin_coin_remove")
+     */
+    public function coinRemoveIndex(Request $request)
+    {
+        try{
+            $em = $this->getDoctrine()->getManager();
+
+            $target = $em->getRepository(HistoryCoin::class)->find($request->get('id'));
+
+            $em->remove($target);
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_coin');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
     }
 
     /**

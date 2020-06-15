@@ -85,6 +85,7 @@ class HistoryCoinRepository extends ServiceEntityRepository
                 coin.user as user,
                 coin.price as price,
                 coin.status as status,
+                u.id as user_id,
                 u.username as name,
                 u.email as mail
             ')
@@ -92,6 +93,9 @@ class HistoryCoinRepository extends ServiceEntityRepository
             ->where('u.email LIKE :filter')
             ->orWhere('u.username LIKE :filter')
             ->setParameter('filter','%'.$filter.'%')
+            ->andWhere('coin.status = :status')
+            ->setParameter('status','Pending')
+            ->orderBy('coin.created_at', 'DESC')
         ;
 
         return $qb->getQuery()->getResult();

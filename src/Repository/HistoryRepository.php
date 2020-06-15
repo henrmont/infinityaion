@@ -52,23 +52,38 @@ class HistoryRepository extends ServiceEntityRepository
     /**
      * @return Ticket[] Returns an array of Item objects
      */
-    public function searchHistoryItens($user)
+    public function searchHistoryItens($filter = null)
     {
         $qb = $this->getQueryBuilder();
 
         $qb
             ->select('
+                history.id as id,
                 history.user as user_id,
                 history.amount as amount,
                 history.price as price,
                 history.player_name as player_name,
+                history.created_at as createdAt,
+                history.item as item,
+                history.player as player,
                 i.name as item_name
             ')
             ->innerJoin(Item::class,'i','WITH','history.item = i.aion')
-            ->where('history.user = :user')
-            ->setParameter('user',$user)
+            ->where('i.aion NOT IN(51930,51960,51990)')
+        ;
+
+        if(isset($filter)){
+            $qb
+                ->andWhere('history.player_name LIKE :filter')
+                ->setParameter('filter','%'.$filter.'%')
+            ;
+
+        }
+
+        $qb
             ->orderBy('history.modified_at','DESC')
         ;
+        
 
         return $qb->getQuery()->getResult();
     }
