@@ -293,7 +293,12 @@ class ShopController extends AbstractController
                     }
                 }
 
-                $user->setCoin($user->getCoin() - ($item->getPrice()*$item->getAmount()));
+                if($item->getPromo()){
+                    $discount = $item->getPrice()*($item->getDiscount()/100);
+                    $user->setCoin($user->getCoin() - (($item->getPrice() - $discount)*$item->getAmount()));
+                }else{
+                    $user->setCoin($user->getCoin() - ($item->getPrice()*$item->getAmount()));    
+                }
 
                 $em->flush();
                 $em_aion_gs->flush();
