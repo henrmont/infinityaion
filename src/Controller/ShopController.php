@@ -295,9 +295,9 @@ class ShopController extends AbstractController
 
                 if($item->getPromo()){
                     $discount = $item->getPrice()*($item->getDiscount()/100);
-                    $user->setCoin($user->getCoin() - (($item->getPrice() - $discount)*$item->getAmount()));
+                    $user->setCoin($user->getCoin() - (($item->getPrice() - $discount)*1));
                 }else{
-                    $user->setCoin($user->getCoin() - ($item->getPrice()*$item->getAmount()));    
+                    $user->setCoin($user->getCoin() - ($item->getPrice()*1));    
                 }
 
                 $em->flush();
