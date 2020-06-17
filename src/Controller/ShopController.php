@@ -210,7 +210,7 @@ class ShopController extends AbstractController
             $unique_id = $em->getRepository(Inventory::class)->getUnique();
             $mail_id = $em->getRepository(Mail::class)->getMailId();
 
-            if($user->getCoin() >= ($item->getPrice()*$item->getAmount())){
+            if($user->getCoin() >= $item->getPrice()){
                 $mail = new Mail();
                 $message = new Message();
 
@@ -295,9 +295,9 @@ class ShopController extends AbstractController
 
                 if($item->getPromo()){
                     $discount = $item->getPrice()*($item->getDiscount()/100);
-                    $user->setCoin($user->getCoin() - (($item->getPrice() - $discount)*1));
+                    $user->setCoin($user->getCoin() - ($item->getPrice() - $discount));
                 }else{
-                    $user->setCoin($user->getCoin() - ($item->getPrice()*1));    
+                    $user->setCoin($user->getCoin() - $item->getPrice());    
                 }
 
                 $em->flush();
