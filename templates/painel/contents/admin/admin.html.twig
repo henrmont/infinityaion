@@ -52,8 +52,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 text-center">
+                        <div class="col-lg-6 text-center">
                             <a href="{{ path('admin_coin') }}" class="btn btn-info" role="button">Administrar Infinity Coin</a>
+                        </div>
+                        <div class="col-lg-6 text-center">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#allVip">
+                                Inserir allVip
+                            </button>
+                            {% include "painel/contents/admin/modals/all_vip.html.twig" %}
                         </div>
                     </div>
                 </div>

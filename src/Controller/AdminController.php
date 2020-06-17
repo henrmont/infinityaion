@@ -892,6 +892,27 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/all/vip", name="admin_allvip")
+     */
+    public function adminAllVip(Request $request)
+    {
+        try{
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository(User::class)->findAll();
+
+            foreach($user as $item){
+                $em->getRepository(User::class)->insertVip($item->getUsername(),$request->get('days'));
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('admin');
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
      * @Route("/cms/carousel", name="admin_cms_carousel")
      */
     public function cmsCarousel(ContainerInterface $container, Request $request, SluggerInterface $slugger)

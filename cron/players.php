@@ -50,9 +50,6 @@ class Players
 
         $res = $result->fetch_all();
 
-        print_r($res);
-        die();
-
         $mysqli->close();
 
         return $res;
