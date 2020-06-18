@@ -47,4 +47,88 @@ class PlayerRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Player[] Returns an array of Player objects
+     */
+    public function getAbyssGlobal()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT 
+                    player_id as player_id,
+                    ap as ap,
+                    rank as ranking,
+                    players.player_class as pclass,
+                    players.race as race,
+                    players.name as charname
+                FROM 
+                    al_server_gs.abyss_rank 
+                INNER JOIN al_server_gs.players
+                ON abyss_rank.player_id = players.id
+                ORDER BY ap DESC
+                    ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return Player[] Returns an array of Player objects
+     */
+    public function getAbyssWeekly()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT 
+                    player_id as player_id,
+                    weekly_ap as ap,
+                    rank as ranking,
+                    players.player_class as pclass,
+                    players.race as race,
+                    players.name as charname
+                FROM 
+                    al_server_gs.abyss_rank 
+                INNER JOIN al_server_gs.players
+                ON abyss_rank.player_id = players.id
+                ORDER BY weekly_ap DESC
+                    ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return Player[] Returns an array of Player objects
+     */
+    public function getAbyssDaily()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT 
+                    player_id as player_id,
+                    daily_ap as ap,
+                    rank as ranking,
+                    players.player_class as pclass,
+                    players.race as race,
+                    players.name as charname
+                FROM 
+                    al_server_gs.abyss_rank 
+                INNER JOIN al_server_gs.players
+                ON abyss_rank.player_id = players.id
+                ORDER BY daily_ap DESC
+                    ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
 }
