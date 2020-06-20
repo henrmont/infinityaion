@@ -129,6 +129,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/admin.html.twig', [
                 'users'     =>  $select_user,
@@ -141,7 +148,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
 
         }catch(\Exception $e){
@@ -173,6 +181,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/itens/itens.html.twig', [
                 'itens'             =>  $result,
@@ -182,7 +197,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -261,6 +277,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/itens/history.html.twig', [
                 'itens'             =>  $result,
@@ -269,7 +292,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -351,6 +375,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/itens/types.html.twig', [
                 'category'             =>  $result,
@@ -359,7 +390,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -430,6 +462,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/suport/suport.html.twig', [
                 'data'          =>  $result,
@@ -438,7 +477,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -462,6 +502,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
             
             return $this->render('painel/contents/admin/suport/ticket.html.twig', [
                 'ticket'    =>  $ticket,
@@ -471,7 +518,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -565,6 +613,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/coin/coin.html.twig', [
                 'data'          =>  $result,
@@ -573,7 +628,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -662,6 +718,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/coin/history.html.twig', [
                 'coin'              =>  $result,
@@ -670,7 +733,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -700,6 +764,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/feed/posts.html.twig', [
                 'report'              =>  $result,
@@ -708,7 +779,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -738,6 +810,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/feed/comments.html.twig', [
                 'report'              =>  $result,
@@ -746,7 +825,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'      =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -876,6 +956,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/player/player.html.twig', [
                 'data'          =>  $result,
@@ -884,7 +971,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -987,6 +1075,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/cms/carousel.html.twig', [
                 'data'          =>  $result,
@@ -996,7 +1091,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -1150,6 +1246,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/cms/notice.html.twig', [
                 'data'          =>  $result,
@@ -1159,7 +1262,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -1312,6 +1416,13 @@ class AdminController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/admin/cms/resource.html.twig', [
                 'data'          =>  $result,
@@ -1321,7 +1432,8 @@ class AdminController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             return $e->getMessage();
@@ -1398,5 +1510,38 @@ class AdminController extends AbstractController
             return $e->getMessage();
         }
     }
+
+    // /**
+    //  * @Route("/ajust/coin", name="admin_ajust_coin")
+    //  */
+    // public function adminAjustCoin(Request $request)
+    // {
+    //     try{
+    //         $em = $this->getDoctrine()->getManager();
+
+    //         $history =  $em->getRepository(HistoryCoin::class)->searchAproveItens();
+    //         $ajust = $em->getRepository(User::class)->findAll();
+
+    //         $donates = [];
+
+    //         foreach($ajust as $user){
+    //             foreach($history as $item){
+    //                 if($user->getId() == $item["user_id"]){
+    //                     $donates[$item['user_id']] = $item['amount'];
+    //                 }
+    //             }
+    //         }
+
+    //         foreach($donates as $chv => $vlr){
+    //             $ajust = $em->getRepository(User::class)->find($chv);
+    //             $ajust->setCoin($ajust->getCoin() + ($vlr/10));
+    //             $em->flush();
+    //         }
+
+    //         return $this->redirectToRoute('admin');
+    //     }catch(\Exception $e){
+    //         return $e->getMessage();
+    //     }
+    // }
 
 }

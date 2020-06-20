@@ -22,6 +22,9 @@
         <li><strong>{{status_name}}</strong></li>
       {% endif %}
       <li><img src="{{ asset('build/img/infinitycoin.jpg') }}" style="width: 15px; border-radius: 100%; margin-right: 5px;">{{status_coins}} IC</li>
+      {% if expire %}
+        <li><img src="{{ asset('build/img/crown.png') }}" style="width: 20px; margin-right: 5px;">{{expire}}</li>
+      {% endif %}
     </ul>  
   </div>
   <div id="menu" style="padding-left: 40px;">

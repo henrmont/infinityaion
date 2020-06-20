@@ -35,6 +35,13 @@ class ConfigController extends AbstractController
                 'promo'     =>  true
             ]);
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/config/config.html.twig', [
                 'tags'                  =>  $msgs,
@@ -43,7 +50,8 @@ class ConfigController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'          =>  $user->getCoin(),
                 'promo'     =>  $promo,
-                'players'   =>  $players
+                'players'   =>  $players,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             $this->addFlash(

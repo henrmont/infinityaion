@@ -50,6 +50,26 @@ class HistoryCoinRepository extends ServiceEntityRepository
     */
 
     /**
+     * @return HistoryCoin[] Returns an array of Item objects
+     */
+    public function searchAproveItens()
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('
+                coin.user as user_id,
+                SUM(coin.amount) as amount
+            ')
+            ->where('coin.status = :status')
+            ->setParameter('status','Aprove')
+            ->groupBy('coin.user')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @return History[] Returns an array of Item objects
      */
     public function historyCoins()

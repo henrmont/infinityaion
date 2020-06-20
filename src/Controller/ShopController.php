@@ -43,6 +43,13 @@ class ShopController extends AbstractController
             $promo = $em->getRepository(Item::class)->findBy([
                 'promo'     =>  true
             ]);
+            $expire = $em->getRepository(User::class)->searchExpire($user->getUsername());
+            if ($expire[0]['expire']) {
+                $dateexpire = explode('-',$expire[0]['expire']);
+                $data = ($dateexpire[2]."/".$dateexpire[1]."/".$dateexpire[0]);
+            } else {
+                $data = 'Sem VIP';
+            }
 
             return $this->render('painel/contents/shop/shop.html.twig', [
                 'data'      =>  $result,
@@ -53,6 +60,7 @@ class ShopController extends AbstractController
                 'status_image'      =>  $user->getImage(),
                 'status_coins'     =>  $user->getCoin(),
                 'promo'     =>  $promo,
+                'expire'    =>  $data
             ]);
         }catch(\Exception $e){
             $this->addFlash(
