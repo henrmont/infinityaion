@@ -136,8 +136,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/admin.html.twig', [
+                'chars'     =>  $chars,
                 'users'     =>  $select_user,
                 'cat_new'   =>  $itemtype_form->createView(),
                 'cat_sel'   =>  $select_itemtype,
@@ -188,8 +190,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/itens/itens.html.twig', [
+                'chars'     =>  $chars,
                 'itens'             =>  $result,
                 'category'          =>  $cat,
                 'status_race'       =>  $user->getRace(),
@@ -284,8 +288,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/itens/history.html.twig', [
+                'chars'     =>  $chars,
                 'itens'             =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
@@ -382,8 +388,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/itens/types.html.twig', [
+                'chars'     =>  $chars,
                 'category'             =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
@@ -469,8 +477,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/suport/suport.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
@@ -509,8 +519,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
             
             return $this->render('painel/contents/admin/suport/ticket.html.twig', [
+                'chars'     =>  $chars,
                 'ticket'    =>  $ticket,
                 'messages'  =>  $ticketMessage,
                 'status_race'      =>  $user->getRace(),
@@ -620,8 +632,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/coin/coin.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
@@ -725,8 +739,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/coin/history.html.twig', [
+                'chars'     =>  $chars,
                 'coin'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
@@ -771,8 +787,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/feed/posts.html.twig', [
+                'chars'     =>  $chars,
                 'report'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
@@ -817,8 +835,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/feed/comments.html.twig', [
+                'chars'     =>  $chars,
                 'report'              =>  $result,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
@@ -963,8 +983,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/player/player.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
@@ -1082,8 +1104,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/cms/carousel.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'form'   =>  $carousel_form->createView(),
                 'status_race'      =>  $user->getRace(),
@@ -1253,8 +1277,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/cms/notice.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'form'   =>  $notice_form->createView(),
                 'status_race'      =>  $user->getRace(),
@@ -1423,8 +1449,10 @@ class AdminController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/admin/cms/resource.html.twig', [
+                'chars'     =>  $chars,
                 'data'          =>  $result,
                 'form'   =>  $resource_form->createView(),
                 'status_race'      =>  $user->getRace(),

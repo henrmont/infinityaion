@@ -37,8 +37,10 @@ class RankingController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/ranking/ranking.html.twig', [
+                'chars'     =>  $chars,
                 'ranking'           =>  $ranking,
                 'weekly'            =>  $rweekly,
                 'daily'             =>  $rdaily,

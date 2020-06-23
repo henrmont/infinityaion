@@ -33,8 +33,10 @@ class CoinController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
                 
             return $this->render('painel/contents/coin/coin.html.twig',[
+                'chars'     =>  $chars,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),

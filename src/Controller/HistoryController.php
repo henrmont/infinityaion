@@ -44,8 +44,10 @@ class HistoryController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/history/history.html.twig', [
+                'chars'     =>  $chars,
                 'history_item'      =>  $history,
                 'history_coin'      =>  $history_coin,
                 'status_race'      =>  $user->getRace(),

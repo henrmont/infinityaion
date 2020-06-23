@@ -42,8 +42,10 @@ class ConfigController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/config/config.html.twig', [
+                'chars'     =>  $chars,
                 'tags'                  =>  $msgs,
                 'status_race'                  =>  $user->getRace(),
                 'status_name'           =>  $user->getName(),

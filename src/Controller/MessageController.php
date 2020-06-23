@@ -48,8 +48,10 @@ class MessageController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/message/message.html.twig', [
+                'chars'     =>  $chars,
                 'data'      =>  $result,
                 'status_race'      =>  $user->getRace(),
                 'status_name'      =>  $user->getName(),

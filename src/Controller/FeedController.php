@@ -106,8 +106,10 @@ class FeedController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/feed/feed.html.twig', [
+                'chars'     =>  $chars,
                 'post'      =>  $feed_form->createView(),
                 'feeds'     =>  $result,
                 'comments'  =>  $comments,
@@ -157,8 +159,10 @@ class FeedController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/feed/feed_full.html.twig', [
+                'chars'     =>  $chars,
                 'feeds'     =>  $feeds,
                 'comments'  =>  $comments,
                 'user'      =>  $user->getId(),

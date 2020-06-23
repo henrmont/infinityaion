@@ -31,7 +31,6 @@ class ShopController extends AbstractController
 
             $data = $em->getRepository(Item::class)->searchItem($request->get('search'), $request->get('category'), $user->getRace());
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
-            $chars = $em->getRepository(User::class)->searchPlayers();
             $category = $em->getRepository(ItemType::class)->findAll();
 
             $pagenator = $container->get('knp_paginator');
@@ -51,6 +50,7 @@ class ShopController extends AbstractController
             } else {
                 $data = 'Sem VIP';
             }
+            $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/shop/shop.html.twig', [
                 'chars'     =>  $chars,
