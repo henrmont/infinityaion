@@ -66,6 +66,16 @@ class History
      */
     private $unique_id;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gift;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gift_to;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -187,6 +197,30 @@ class History
     public function setUnique(int $unique_id): self
     {
         $this->unique_id = $unique_id;
+
+        return $this;
+    }
+
+    public function getGift(): ?bool
+    {
+        return $this->gift;
+    }
+
+    public function setGift(bool $gift): self
+    {
+        $this->gift = $gift;
+
+        return $this;
+    }
+
+    public function getGiftTo(): ?string
+    {
+        return $this->gift_to;
+    }
+
+    public function setGiftTo(string $gift_to): self
+    {
+        $this->gift_to = $gift_to;
 
         return $this;
     }

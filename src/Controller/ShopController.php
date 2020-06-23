@@ -31,6 +31,7 @@ class ShopController extends AbstractController
 
             $data = $em->getRepository(Item::class)->searchItem($request->get('search'), $request->get('category'), $user->getRace());
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
+            $chars = $em->getRepository(User::class)->searchPlayers();
             $category = $em->getRepository(ItemType::class)->findAll();
 
             $pagenator = $container->get('knp_paginator');
@@ -52,6 +53,7 @@ class ShopController extends AbstractController
             }
 
             return $this->render('painel/contents/shop/shop.html.twig', [
+                'chars'     =>  $chars,
                 'data'      =>  $result,
                 'players'   =>  $players,
                 'category'  =>  $category,
@@ -208,11 +210,13 @@ class ShopController extends AbstractController
                 'aion'  =>  $request->get('aionId')
             ]);
 
+            // print_r($item);
+            // die();
+
             $chk = substr($item->getAionid(),0,3);
             $vip = substr($item->getAionid(),3,2);
 
-            // echo $vip;
-            // die();
+            
 
             //mail e inventory
             $unique_id = $em->getRepository(Inventory::class)->getUnique();
@@ -235,6 +239,7 @@ class ShopController extends AbstractController
                     $history->setAmount($item->getAmount());
                     $history->setPrice($item->getPrice());
                     $history->setTotal($item->getPrice()*$item->getAmount());
+                    $history->setGift(false);
                     $em->persist($history);
 
                     //message
@@ -345,4 +350,148 @@ class ShopController extends AbstractController
     //     }
         
     // }
+
+    /**
+     * @Route("/shop/gift", name="shop_gift")
+     */
+    public function shopGift(Request $request)
+    {
+        $con = $this->getDoctrine()->getConnection();
+        $con->beginTransaction();
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            
+            $user = $this->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $em_aion_gs = $this->getDoctrine()->getManager('aiongs');
+
+            $item = $em->getRepository(Item::class)->findOneBy([
+                'aion'  =>  $request->get('id_gift')
+            ]);
+
+            $chk = substr($item->getAionId(),0,3);
+            $vip = substr($item->getAionId(),3,2);
+
+            //gift target
+            $char = $em->getRepository(User::class)->searchCharById($request->get('selgift'));
+            $target = $em->getRepository(User::class)->findOneBy([
+                'username'      =>  $char[0]["account_name"]
+            ]);
+
+            //mail e inventory
+            $unique_id = $em->getRepository(Inventory::class)->getUnique();
+            $mail_id = $em->getRepository(Mail::class)->getMailId();
+
+            if($user->getCoin() >= $item->getPrice()){
+                $mail = new Mail();
+                $message = new Message();
+
+                if($chk == 519){
+                    $vip = substr($item->getAionid(),3,2);
+                    $em->getRepository(User::class)->insertVip($target->getUsername(), $vip);
+
+                    //history
+                    $history = new History();
+                    $history->setUser($user->getId());
+                    $history->setCreatedAt(new \DateTime('now'));
+                    $history->setModifiedAt(new \DateTime('now'));
+                    $history->setItem($item->getAionId());
+                    $history->setAmount($item->getAmount());
+                    $history->setPrice($item->getPrice());
+                    $history->setTotal($item->getPrice()*$item->getAmount());
+                    $history->setGift(true);
+                    $history->setGiftTo($target->getId());
+                    $em->persist($history);
+
+                    //message
+                    if($target->getTagShop() == true){
+                        $message = new Message();
+                        $message->setUser($target->getId());
+                        $message->setSubject('VIP Presenteado');
+                        $message->setText('Você foi presentado com o pacote '.$item->getName().'. A equipe do Infinity Aion agradece.');
+                        $message->setUnread(true);
+                        $message->setCreatedAt(new \DateTime('now'));
+                        $message->setModifiedAt(new \DateTime('now'));
+                        $em->persist($message);
+                    }
+                    
+                }else{
+                    //history
+                    $history = new History();
+                    $history->setUser($user->getId());
+                    $history->setCreatedAt(new \DateTime('now'));
+                    $history->setModifiedAt(new \DateTime('now'));
+                    $history->setItem($item->getAionId());
+                    $history->setAmount($item->getAmount());
+                    $history->setPrice($item->getPrice());
+                    $history->setUnique($unique_id[0]['unique_id']+1);
+                    $history->setGift(true);
+                    $history->setGiftTo($target->getId());
+                    $history->setTotal($item->getPrice()*$item->getAmount());
+
+                    $player = explode('|',$request->get('selgift'));
+                    $history->setPlayer($player[0]);
+                    $history->setPlayerName($player[1]);
+                    $em->persist($history);
+
+                    $inventory = new Inventory();
+                    $inventory->setId($unique_id[0]['unique_id']+1);
+                    $inventory->setItemId($item->getAionId());
+                    $inventory->setItemCount($item->getAmount());
+                    $inventory->setItemSkin($item->getAionId());
+                    $inventory->setItemOwner($player[0]);
+                    $em_aion_gs->persist($inventory);
+                    // $em_aion_gs->flush();
+
+                    //mail
+                    $mail->setId($mail_id[0]['mail_id']+1);
+                    $mail->setMailRecipientId($player[0]);
+                    $mail->setSenderName('Infinity Aion');
+                    $mail->setMailTitle('Aion Shop');
+                    $mail->setMailMessage('Você foi presenteado com esse item. A equipe do Infinity Aion agradece.');
+                    $mail->setUnread(1);
+                    $mail->setAttachedItemId(0);
+                    $mail->setAttachedKinahCount(0);
+                    $mail->setExpress(2);
+                    $mail->setRecievedTime(new \DateTime('now'));
+                    $em_aion_gs->persist($mail);
+
+                    //message
+                    if($target->getTagShop() == true){
+                        $message = new Message();
+                        $message->setUser($target->getId());
+                        $message->setSubject('Item Presenteado');
+                        $message->setText('Você foi presenteado com o item '.$item->getName().'. A equipe do Infinity Aion agradece.');
+                        $message->setUnread(true);
+                        $message->setCreatedAt(new \DateTime('now'));
+                        $message->setModifiedAt(new \DateTime('now'));
+                        $em->persist($message);
+                    }
+                }
+
+                if($item->getPromo()){
+                    $discount = $item->getPrice()*($item->getDiscount()/100);
+                    $user->setCoin($user->getCoin() - ($item->getPrice() - $discount));
+                }else{
+                    $user->setCoin($user->getCoin() - $item->getPrice());    
+                }
+
+                $em->flush();
+                $em_aion_gs->flush();
+
+                $con->commit();
+            } else {
+
+            }
+            
+            return $this->redirectToRoute('shop');
+        }catch(\Exception $e){
+            $con->rollBack();
+            $this->addFlash(
+                'notice',
+                'Faça o login.'
+            );
+            return $this->redirectToRoute('site');
+        }
+    }
 }

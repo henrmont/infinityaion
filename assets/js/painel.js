@@ -128,6 +128,10 @@
         $('[name="id"]').val($(this).data('id'));
     })
 
+    $('[data-target="#itemPresente"]').click(function(){
+        $('[name="id_gift"]').val($(this).data('id'));
+    })
+
     $('#senha-submit').click(function(e){
         e.preventDefault();
         var pwd = $('#pwd').val();

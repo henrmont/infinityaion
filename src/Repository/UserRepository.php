@@ -71,6 +71,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[] Returns an array of ShopItem objects
      */
+    public function searchPlayers()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM al_server_gs.players
+            ORDER BY players.name ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
     public function searchChar($user)
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -81,6 +99,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['user' => $user]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return User[] Returns an array of ShopItem objects
+     */
+    public function searchCharById($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM al_server_gs.players
+            WHERE al_server_gs.players.id = :id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAll();
