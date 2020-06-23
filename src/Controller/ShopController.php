@@ -210,13 +210,8 @@ class ShopController extends AbstractController
                 'aion'  =>  $request->get('aionId')
             ]);
 
-            // print_r($item);
-            // die();
-
             $chk = substr($item->getAionid(),0,3);
             $vip = substr($item->getAionid(),3,2);
-
-            
 
             //mail e inventory
             $unique_id = $em->getRepository(Inventory::class)->getUnique();
@@ -227,6 +222,8 @@ class ShopController extends AbstractController
                 $message = new Message();
 
                 if($chk == 519){
+                    
+
                     $vip = substr($item->getAionid(),3,2);
                     $em->getRepository(User::class)->insertVip($user->getUsername(), $vip);
 
@@ -264,6 +261,7 @@ class ShopController extends AbstractController
                     $history->setAmount($item->getAmount());
                     $history->setPrice($item->getPrice());
                     $history->setUnique($unique_id[0]['unique_id']+1);
+                    $history->setGift(false);
                     $history->setTotal($item->getPrice()*$item->getAmount());
 
                     $player = explode('|',$request->get('selchar'));
@@ -318,7 +316,8 @@ class ShopController extends AbstractController
 
                 $con->commit();
             } else {
-
+                // print_r($item);
+                // die();
             }
             
             return $this->redirectToRoute('shop');
