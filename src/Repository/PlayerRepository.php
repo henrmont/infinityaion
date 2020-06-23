@@ -131,4 +131,32 @@ class PlayerRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAll();
     }
+
+    /**
+     * @return Player[] Returns an array of Player objects
+     */
+    public function getKills()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT 
+                    player_id as player_id,
+                    all_kill as kills,
+                    rank as ranking,
+                    players.player_class as pclass,
+                    players.race as race,
+                    players.name as charname
+                FROM 
+                    al_server_gs.abyss_rank 
+                INNER JOIN al_server_gs.players
+                ON abyss_rank.player_id = players.id
+                ORDER BY all_kill DESC
+                    ';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
 }

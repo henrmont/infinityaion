@@ -25,6 +25,7 @@ class RankingController extends AbstractController
             $ranking = $em->getRepository(Player::class)->getAbyssGlobal();
             $rweekly = $em->getRepository(Player::class)->getAbyssWeekly();
             $rdaily = $em->getRepository(Player::class)->getAbyssDaily();
+            $kills = $em->getRepository(Player::class)->getKills();
 
             $promo = $em->getRepository(Item::class)->findBy([
                 'promo'     =>  true
@@ -44,6 +45,7 @@ class RankingController extends AbstractController
                 'ranking'           =>  $ranking,
                 'weekly'            =>  $rweekly,
                 'daily'             =>  $rdaily,
+                'kills'             =>  $kills,
                 'status_race'       =>  $user->getRace(),
                 'status_name'       =>  $user->getName(),
                 'status_image'      =>  $user->getImage(),
