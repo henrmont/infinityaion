@@ -1,6 +1,7 @@
 !(function($){
     $('[data-target="#showitem"]').click(function(){
         $('[name="aionId"]').val($(this).data('id'));
+        $('[name="image"]').attr('src',"build/img/shop/info/"+$(this).data('id')+".png");
 
         var amount = $(this).data('set');
         
@@ -49,6 +50,12 @@
     $('[data-target="#editItem"]').click(function(){
         $('[name="id"]').val($(this).data('id'));
         $('[name="aion"]').text($(this).data('id'));
+        $('[name="editlevel"]').val($(this).data('level'));
+        $('[name="editname"]').val($(this).data('name'));
+        $('[name="editprice"]').val($(this).data('price'));
+        $('[name="editamount"]').val($(this).data('amount'));
+        $('[name="editdiscount"]').val($(this).data('discount'));
+        $('[name="editbbcode"]').val($(this).data('bbcode'));
     })
 
     $('[data-target="#deleteItem"]').click(function(){

@@ -30,12 +30,15 @@ class ItemRepository extends ServiceEntityRepository
             ->select('
                 item.id AS id,
                 item.aion AS aion,
+                item.type AS cat,
+                item.level AS level,
                 item.name AS name,
                 item.price AS price,
                 item.discount AS discount,
                 item.promo AS promo,
                 item.image AS image,
                 item.race AS race,
+                item.bbcode AS bbcode,
                 item.amount AS amount
             ')
             ->where('item.name LIKE :filter')

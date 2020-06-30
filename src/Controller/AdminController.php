@@ -172,6 +172,11 @@ class AdminController extends AbstractController
             $item = $em->getRepository(Item::class)->searchItem($request->get('search'), $request->get('category'));
             $cat = $em->getRepository(ItemType::class)->findAll();
 
+            // echo "<pre>";
+            // print_r($item);
+            // echo "</pre>";
+            // die();
+
             $pagenator = $container->get('knp_paginator');
             $result = $pagenator->paginate(
                 $item,

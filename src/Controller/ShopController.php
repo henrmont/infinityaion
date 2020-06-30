@@ -32,6 +32,10 @@ class ShopController extends AbstractController
             $data = $em->getRepository(Item::class)->searchItem($request->get('search'), $request->get('category'), $user->getRace());
             $players = $em->getRepository(User::class)->searchChar($user->getUsername());
             $category = $em->getRepository(ItemType::class)->findAll();
+            $cube = $em->getRepository(History::class)->searchExpandCard($user->getId());
+
+            // print_r($cube);
+            // die();
 
             $pagenator = $container->get('knp_paginator');
             $result = $pagenator->paginate(
@@ -53,6 +57,7 @@ class ShopController extends AbstractController
             $chars = $em->getRepository(User::class)->searchPlayers();
 
             return $this->render('painel/contents/shop/shop.html.twig', [
+                'cube'      =>  $cube,
                 'chars'     =>  $chars,
                 'data'      =>  $result,
                 'players'   =>  $players,
@@ -65,11 +70,11 @@ class ShopController extends AbstractController
                 'expire'    =>  $data
             ]);
         }catch(\Exception $e){
-            $this->addFlash(
-                'notice',
-                'Faça o login.'
-            );
-            return $this->redirectToRoute('site');
+            // $this->addFlash(
+            //     'notice',
+            //     'Faça o login.'
+            // );
+            // return $this->redirectToRoute('site');
         } 
         
     }

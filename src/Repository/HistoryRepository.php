@@ -52,6 +52,24 @@ class HistoryRepository extends ServiceEntityRepository
     /**
      * @return Ticket[] Returns an array of Item objects
      */
+    public function searchExpandCard($user)
+    {
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('count(history.item) AS countItem')
+            ->where('history.item = :item')
+            ->andWhere('history.user = :user')
+            ->setParameter('item', 169630003)
+            ->setParameter('user',$user)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Ticket[] Returns an array of Item objects
+     */
     public function searchHistoryItens($filter = null)
     {
         $qb = $this->getQueryBuilder();
