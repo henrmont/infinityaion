@@ -623,7 +623,7 @@ class AdminController extends AbstractController
             $result = $pagenator->paginate(
                 $ticket_view,
                 $request->query->getInt('page',1),
-                $request->query->getInt('limit',6)
+                $request->query->getInt('limit',30)
             );
 
             $promo = $em->getRepository(Item::class)->findBy([

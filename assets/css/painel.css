@@ -42,7 +42,7 @@
  }
 
  #sidenav #desc ul {
-     padding-top: 10px;
+    padding-top: 10px;
     list-style: none;
  }
 
@@ -65,7 +65,7 @@
 }
 
 #sidenav #menu ul li {
-    padding: 0.7vh;
+    padding: 0.4vh;
 }
 
 #sidenav #menu ul li a{
