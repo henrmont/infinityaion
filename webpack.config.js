@@ -18,6 +18,11 @@ Encore
         from: './assets/img',
         to: 'img/[path][name].[ext]'
     })
+
+    .copyFiles({
+        from: './assets/download',
+        to: 'download/[path][name].[ext]'
+    })
     
 
     /*
